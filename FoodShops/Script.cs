@@ -48,7 +48,7 @@ namespace FoodShops
             if (Directory.Exists(locationsPath))
             {
                 ShopMenuConverter converter = new ShopMenuConverter(menus);
-                foreach (string file in Directory.EnumerateFiles(menuPath))
+                foreach (string file in Directory.EnumerateFiles(locationsPath))
                 {
                     if (Path.GetExtension(file).ToLowerInvariant() != ".json")
                     {

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using GTA.UI;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 
@@ -7,7 +9,7 @@ namespace FoodShops.Converters
     /// <summary>
     /// Loads the 
     /// </summary>
-    public class ShopMenuConverter : JsonConverter<ShopMenu>
+    public class ShopMenuConverter : JsonConverter<List<ShopMenu>>
     {
         private readonly List<ShopMenu> menus;
 
@@ -16,25 +18,28 @@ namespace FoodShops.Converters
             this.menus = menus;
         }
 
-        public override ShopMenu ReadJson(JsonReader reader, Type objectType, ShopMenu existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override List<ShopMenu> ReadJson(JsonReader reader, Type objectType, List<ShopMenu> existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            // Get the ID and try to parse it as JSON
-            string id = (string)reader.Value;
-            Guid guid = Guid.Parse(id);
+            JArray values = JArray.Load(reader);
+            List<ShopMenu> foundMenus = new List<ShopMenu>();
 
-            // Then, try to find any menus with the same ID
-            foreach (ShopMenu menu in menus)
+            foreach (JToken value in values)
             {
-                if (menu.ID == guid)
+                Guid guid = Guid.Parse((string)value);
+                foreach (ShopMenu menu in menus)
                 {
-                    return menu;
+                    if (menu.ID == guid)
+                    {
+                        foundMenus.Add(menu);
+                    }
                 }
+                Notification.Show($"~o~Warning~s~: Menu with the ID {guid} was not found!");
             }
-            // If none were found, return null
-            return null;
+
+            return foundMenus;
         }
 
-        public override void WriteJson(JsonWriter writer, ShopMenu value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, List<ShopMenu> value, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
