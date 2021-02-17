@@ -1,0 +1,25 @@
+{
+    "id": "134a2974-99c5-48cd-a583-4dda8f593da8",
+    "meals": [
+        {
+            "name": "Burger",
+            "price": 1,
+            "health": 0
+        },
+        {
+            "name": "Beef Tower",
+            "price": 5,
+            "health": 0
+        },
+        {
+            "name": "Meat Stack",
+            "price": 10,
+            "health": 0
+        },
+        {
+            "name": "Salad Meal",
+            "price": 10,
+            "health": 0
+        }
+    ]
+}

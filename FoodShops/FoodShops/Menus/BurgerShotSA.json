@@ -1,0 +1,25 @@
+﻿{
+    "id": "e4beaa90-f00e-43ca-8a2b-4b589290b971",
+    "meals": [
+        {
+            "name": "Moo Kids Meal",
+            "price": 2,
+            "health": 0
+        },
+        {
+            "name": "Beef Tower",
+            "price": 5,
+            "health": 0
+        },
+        {
+            "name": "Meat Stack",
+            "price": 10,
+            "health": 0
+        },
+        {
+            "name": "Salad Meal",
+            "price": 10,
+            "health": 0
+        }
+    ]
+}

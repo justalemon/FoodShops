@@ -1,0 +1,30 @@
+{
+    "id": "41fcb726-80ff-4471-9ba1-03a7e61cb1b4",
+    "meals": [
+        {
+            "name": "Bleeder Burger",
+            "price": 1,
+            "health": 0
+        },
+        {
+            "name": "Heart Stopper",
+            "price": 7,
+            "health": 0
+        },
+        {
+            "name": "Bleeder Meal",
+            "price": 4,
+            "health": 0
+        },
+        {
+            "name": "Money Shot Meal",
+            "price": 7,
+            "health": 0
+        },
+        {
+            "name": "Torpedo Meal",
+            "price": 6,
+            "health": 0
+        }
+    ]
+}
