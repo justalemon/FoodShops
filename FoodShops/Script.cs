@@ -61,7 +61,14 @@ namespace FoodShops
                     }
                     string contents = File.ReadAllText(file);
                     ShopLocation location = JsonConvert.DeserializeObject<ShopLocation>(contents, converter);
-                    locations.Add(location);
+                    if (Function.Call<bool>(Hash.IS_VALID_INTERIOR, location.Interior))
+                    {
+                        locations.Add(location);
+                    }
+                    else
+                    {
+                        Notification.Show($"~o~Warning~s~: Skipping {Path.GetFileName(file)} because the Interior ID is not valid");
+                    }
                 }
             }
             else
