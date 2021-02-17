@@ -11,6 +11,11 @@ namespace FoodShops
     public class ShopLocation
     {
         /// <summary>
+        /// The name of this Shop.
+        /// </summary>
+        [JsonProperty("name")]
+        public string Name { get; set; }
+        /// <summary>
         /// The interior where this Shop is located.
         /// </summary>
         [JsonProperty("interior")]

@@ -13,6 +13,11 @@ namespace FoodShops
         [JsonProperty("name")]
         public string Name { get; set; }
         /// <summary>
+        /// A short description of the Meal.
+        /// </summary>
+        [JsonProperty("description")]
+        public string Description { get; set; }
+        /// <summary>
         /// The Price of the Meal.
         /// </summary>
         [JsonProperty("price")]
