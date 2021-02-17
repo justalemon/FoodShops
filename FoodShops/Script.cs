@@ -1,9 +1,12 @@
 ﻿using FoodShops.Converters;
 using GTA;
+using GTA.Math;
+using GTA.Native;
 using GTA.UI;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 
@@ -20,12 +23,18 @@ namespace FoodShops
 
         #endregion
 
+        #region Properties
+
+        private readonly List<ShopMenu> menus = new List<ShopMenu>();
+        private readonly List<ShopLocation> locations = new List<ShopLocation>();
+
+        #endregion
+
         #region Constructor
 
         public FoodShops()
         {
             // If the folder with meals exist, load them
-            List<ShopMenu> menus = new List<ShopMenu>();
             string menuPath = Path.Combine(location, "Menus");
             if (Directory.Exists(menuPath))
             {
@@ -47,7 +56,6 @@ namespace FoodShops
             }
 
             // Then, do the same but for the shop locations themselves
-            List<ShopLocation> locations = new List<ShopLocation>();
             string locationsPath = Path.Combine(location, "Locations");
             if (Directory.Exists(locationsPath))
             {
@@ -74,6 +82,33 @@ namespace FoodShops
             else
             {
                 Notification.Show($"~o~Warning~s~: Locations Directory was not found!");
+            }
+
+            // Finally, add the tick event and start working
+            Tick += FoodShops_Tick;
+        }
+
+        #endregion
+
+        #region Events
+
+        private void FoodShops_Tick(object sender, EventArgs e)
+        {
+            // Get some of the user's information to use it later
+            Vector3 pos = Game.Player.Character.Position;
+            int interior = Function.Call<int>(Hash.GET_INTERIOR_FROM_ENTITY, Game.Player.Character);
+
+            // Iterate over the available interiors
+            foreach (ShopLocation location in locations)
+            {
+                // If the player is too far from the location or is not on the correct interior, skip it
+                if (pos.DistanceTo(location.Trigger) > 50 || interior != location.Interior)
+                {
+                    continue;
+                }
+
+                // Otherwise, draw the marker in the correct position
+                World.DrawMarker(MarkerType.VerticalCylinder, location.Trigger, Vector3.Zero, Vector3.Zero, new Vector3(1, 1, 1), Color.Red);
             }
         }
 
