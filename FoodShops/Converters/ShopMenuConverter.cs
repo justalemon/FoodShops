@@ -25,15 +25,21 @@ namespace FoodShops.Converters
 
             foreach (JToken value in values)
             {
+                bool added = false;
                 Guid guid = Guid.Parse((string)value);
                 foreach (ShopMenu menu in menus)
                 {
                     if (menu.ID == guid)
                     {
                         foundMenus.Add(menu);
+                        added = true;
+                        break;
                     }
                 }
-                Notification.Show($"~o~Warning~s~: Menu with the ID {guid} was not found!");
+                if (!added)
+                {
+                    Notification.Show($"~o~Warning~s~: Menu with the ID {guid} was not found!");
+                }
             }
 
             return foundMenus;
