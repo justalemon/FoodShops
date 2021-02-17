@@ -41,6 +41,10 @@ namespace FoodShops
                     menus.Add(menu);
                 }
             }
+            else
+            {
+                Notification.Show($"~o~Warning~s~: Menus Directory was not found!");
+            }
 
             // Then, do the same but for the shop locations themselves
             List<ShopLocation> locations = new List<ShopLocation>();
@@ -59,6 +63,10 @@ namespace FoodShops
                     ShopLocation location = JsonConvert.DeserializeObject<ShopLocation>(contents, converter);
                     locations.Add(location);
                 }
+            }
+            else
+            {
+                Notification.Show($"~o~Warning~s~: Locations Directory was not found!");
             }
         }
 
