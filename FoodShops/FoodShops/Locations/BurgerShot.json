@@ -1,10 +1,20 @@
 {
-    "interior": 0,
+    "name": "Burger Shot",
+    "banner_txd": "foodshops",
+    "banner_texture": "burger_shot",
+    "interior": 120834,
     "trigger": {
         "x": -1193.184,
         "y": -892.2986,
         "z": 13
     },
+    "ped_pos": {
+        "x": -1195.25,
+        "y": -893.6337,
+        "z": 13.99531
+    },
+    "ped_heading": 301.9149,
+    "ped_model": "csb_burgerdrug",
     "menus": [
         "41fcb726-80ff-4471-9ba1-03a7e61cb1b4"
     ]
