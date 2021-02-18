@@ -74,23 +74,16 @@ namespace FoodShops
                     }
                     string contents = File.ReadAllText(file);
                     ShopLocation location = JsonConvert.DeserializeObject<ShopLocation>(contents, converter);
-                    if (Function.Call<bool>(Hash.IS_VALID_INTERIOR, location.Interior))
+                    ScaledTexture texture = null;
+                    if (!string.IsNullOrWhiteSpace(location.BannerTXD) && !string.IsNullOrWhiteSpace(location.BannerTexture))
                     {
-                        ScaledTexture texture = null;
-                        if (!string.IsNullOrWhiteSpace(location.BannerTXD) && !string.IsNullOrWhiteSpace(location.BannerTexture))
-                        {
-                            texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTXD);
-                        }
-                        PurchaseMenu menu = new PurchaseMenu(location, texture);
-                        locations.Add(location);
-                        pool.Add(menu);
-                        uiMenus.Add(location, menu);
-                        location.CreatePed();
+                        texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTXD);
                     }
-                    else
-                    {
-                        Notification.Show($"~o~Warning~s~: Skipping {Path.GetFileName(file)} because the Interior ID is not valid");
-                    }
+                    PurchaseMenu menu = new PurchaseMenu(location, texture);
+                    locations.Add(location);
+                    pool.Add(menu);
+                    uiMenus.Add(location, menu);
+                    location.CreatePed();
                 }
             }
             else
@@ -150,13 +143,13 @@ namespace FoodShops
             foreach (ShopLocation location in locations)
             {
                 // If the player is too far from the location or is not on the correct interior, skip it
-                if (pos.DistanceTo(location.Trigger) > 50 || interior != location.Interior)
+                if (pos.DistanceTo(location.Trigger) > 50 || !location.Interiors.Contains(interior))
                 {
                     continue;
                 }
 
                 // Otherwise, draw the marker in the correct position
-                World.DrawMarker(MarkerType.VerticalCylinder, location.Trigger, Vector3.Zero, Vector3.Zero, new Vector3(1, 1, 1), Color.Red);
+                World.DrawMarker(MarkerType.VerticalCylinder, location.Trigger, Vector3.Zero, Vector3.Zero, new Vector3(0.5f, 0.5f, 0.5f), Color.Red);
 
                 // If the player is very close to the ma1rker, tell him to press interact
                 if (pos.DistanceTo(location.Trigger) < 1.25f)
