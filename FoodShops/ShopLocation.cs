@@ -1,4 +1,5 @@
 ﻿using FoodShops.Converters;
+using GTA;
 using GTA.Math;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -27,9 +28,56 @@ namespace FoodShops
         [JsonConverter(typeof(Vector3Converter))]
         public Vector3 Trigger { get; set; }
         /// <summary>
+        /// The position of the ped over the counter.
+        /// </summary>
+        [JsonProperty("ped_pos")]
+        [JsonConverter(typeof(Vector3Converter))]
+        public Vector3 PedPos { get; set; }
+        /// <summary>
+        /// The Heading of the ped.
+        /// </summary>
+        [JsonProperty("ped_heading")]
+        public float PedHeading { get; set; }
+        /// <summary>
+        /// The model of the ped.
+        /// </summary>
+        [JsonProperty("ped_model")]
+        public Model PedModel { get; set; }
+        /// <summary>
         /// The Meal Menus that the player can consume.
         /// </summary>
         [JsonProperty("menus")]
         public List<ShopMenu> Menus { get; set; }
+
+        /// <summary>
+        /// The Ped over the counter that speaks with the player.
+        /// </summary>
+        [JsonIgnore]
+        public Ped Ped { get; private set; }
+
+        /// <summary>
+        /// Creates the ped over the counter.
+        /// </summary>
+        public void CreatePed()
+        {
+            DeletePed();
+            Ped = World.CreatePed(PedModel, PedPos, PedHeading);
+            Ped.BlockPermanentEvents = true;
+            Ped.CanBeTargetted = false;
+            Ped.CanRagdoll = false;
+            Ped.CanWrithe = false;
+            Ped.IsInvincible = true;
+        }
+        /// <summary>
+        /// Deletes the existing ped, if any.
+        /// </summary>
+        public void DeletePed()
+        {
+            if (Ped != null)
+            {
+                Ped.Delete();
+            }
+            Ped = null;
+        }
     }
 }

@@ -79,6 +79,7 @@ namespace FoodShops
                         locations.Add(location);
                         pool.Add(menu);
                         uiMenus.Add(location, menu);
+                        location.CreatePed();
                     }
                     else
                     {
@@ -159,6 +160,7 @@ namespace FoodShops
                     if (Game.IsControlJustPressed(Control.Context))
                     {
                         uiMenus[location].Visible = true;
+                        return;
                     }
                 }
             }
@@ -167,6 +169,10 @@ namespace FoodShops
         private void FoodShops_Aborted(object sender, EventArgs e)
         {
             pool.HideAll();
+            foreach (ShopLocation location in locations)
+            {
+                location.DeletePed();
+            }
         }
 
         #endregion
