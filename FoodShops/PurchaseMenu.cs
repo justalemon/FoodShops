@@ -1,4 +1,5 @@
-﻿using LemonUI.Menus;
+﻿using LemonUI.Elements;
+using LemonUI.Menus;
 
 namespace FoodShops
 {
@@ -9,7 +10,7 @@ namespace FoodShops
     {
         #region Constructor
 
-        public PurchaseMenu(ShopLocation location) : base("", location.Name)
+        public PurchaseMenu(ShopLocation location, ScaledTexture banner) : base("", location.Name, "", banner)
         {
             //NoItemsText = "This Shop does not has any food or drinks to be purchased.";
             foreach (ShopMenu menu in location.Menus)

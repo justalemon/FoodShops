@@ -17,6 +17,16 @@ namespace FoodShops
         [JsonProperty("name")]
         public string Name { get; set; }
         /// <summary>
+        /// The dictionary where the banner texture is.
+        /// </summary>
+        [JsonProperty("banner_txd")]
+        public string BannerTXD { get; set; }
+        /// <summary>
+        /// The texture to use as a banner.
+        /// </summary>
+        [JsonProperty("banner_texture")]
+        public string BannerTexture { get; set; }
+        /// <summary>
         /// The interior where this Shop is located.
         /// </summary>
         [JsonProperty("interior")]

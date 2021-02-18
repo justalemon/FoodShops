@@ -4,6 +4,7 @@ using GTA.Math;
 using GTA.Native;
 using GTA.UI;
 using LemonUI;
+using LemonUI.Elements;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,12 @@ namespace FoodShops
                     ShopLocation location = JsonConvert.DeserializeObject<ShopLocation>(contents, converter);
                     if (Function.Call<bool>(Hash.IS_VALID_INTERIOR, location.Interior))
                     {
-                        PurchaseMenu menu = new PurchaseMenu(location);
+                        ScaledTexture texture = null;
+                        if (!string.IsNullOrWhiteSpace(location.BannerTXD) && !string.IsNullOrWhiteSpace(location.BannerTexture))
+                        {
+                            texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTXD);
+                        }
+                        PurchaseMenu menu = new PurchaseMenu(location, texture);
                         locations.Add(location);
                         pool.Add(menu);
                         uiMenus.Add(location, menu);
