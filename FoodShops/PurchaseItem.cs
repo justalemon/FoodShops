@@ -19,7 +19,7 @@ namespace FoodShops
 
         #region Constructor
 
-        public PurchaseItem(ShopMeal meal) : base(meal.Name, meal.Description ?? "", $"${meal.Price}")
+        public PurchaseItem(ShopMeal meal) : base($"{meal.Name} ({meal.Health})", meal.Description ?? "", $"${meal.Price}")
         {
             this.meal = meal;
             Activated += PurchaseItem_Activated;
