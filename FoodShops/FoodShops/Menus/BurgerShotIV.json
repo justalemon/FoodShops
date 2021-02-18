@@ -4,27 +4,32 @@
         {
             "name": "Bleeder Burger",
             "price": 1,
-            "health": 0
-        },
-        {
-            "name": "Heart Stopper",
-            "price": 7,
-            "health": 0
+            "health": 5
         },
         {
             "name": "Bleeder Meal",
             "price": 4,
-            "health": 0
+            "health": 20
         },
         {
-            "name": "Money Shot Meal",
-            "price": 7,
-            "health": 0
+            "name": "Meat Free Meal",
+            "price": 5,
+            "health": 25
         },
         {
             "name": "Torpedo Meal",
             "price": 6,
-            "health": 0
+            "health": 30
+        },
+        {
+            "name": "Heart Stopper",
+            "price": 7,
+            "health": 35
+        },
+        {
+            "name": "Money Shot Meal",
+            "price": 7,
+            "health": 35
         }
     ]
 }
