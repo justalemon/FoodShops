@@ -2,24 +2,44 @@
     "id": "134a2974-99c5-48cd-a583-4dda8f593da8",
     "meals": [
         {
-            "name": "Burger",
+            "name": "Toast with Coffee",
             "price": 1,
-            "health": 0
+            "health": 10
         },
         {
-            "name": "Beef Tower",
+            "name": "Bacon with Hash Browns",
+            "price": 2,
+            "health": 20
+        },
+        {
+            "name": "Pancakes with Syrup",
+            "price": 3,
+            "health": 30
+        },
+        {
+            "name": "Meatloaf",
+            "price": 4,
+            "health": 40
+        },
+        {
+            "name": "Scrambled eggs with Waffles",
             "price": 5,
-            "health": 0
+            "health": 50
         },
         {
-            "name": "Meat Stack",
-            "price": 10,
-            "health": 0
+            "name": "Chicken Dinner",
+            "price": 6,
+            "health": 60
         },
         {
-            "name": "Salad Meal",
+            "name": "Pizza",
+            "price": 8,
+            "health": 80
+        },
+        {
+            "name": "Steak and Fries",
             "price": 10,
-            "health": 0
+            "health": 100
         }
     ]
 }
