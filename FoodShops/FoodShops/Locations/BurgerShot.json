@@ -2,10 +2,6 @@
     "name": "Burger Shot",
     "banner_txd": "foodshops",
     "banner_texture": "burger_shot",
-    "interiors": [
-        120834,
-        13826
-    ],
     "trigger": {
         "x": -1193.9,
         "y": -892.7,

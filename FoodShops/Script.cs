@@ -137,13 +137,12 @@ namespace FoodShops
 
             // Get some of the user's information to use it later
             Vector3 pos = Game.Player.Character.Position;
-            int interior = Function.Call<int>(Hash.GET_INTERIOR_FROM_ENTITY, Game.Player.Character);
 
             // Iterate over the available interiors
             foreach (ShopLocation location in locations)
             {
                 // If the player is too far from the location or is not on the correct interior, skip it
-                if (pos.DistanceTo(location.Trigger) > 50 || !location.Interiors.Contains(interior))
+                if (pos.DistanceTo(location.Trigger) > 50)
                 {
                     continue;
                 }

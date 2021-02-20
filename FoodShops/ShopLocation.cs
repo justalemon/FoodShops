@@ -27,11 +27,6 @@ namespace FoodShops
         [JsonProperty("banner_texture")]
         public string BannerTexture { get; set; }
         /// <summary>
-        /// The interiors where this Shop is located.
-        /// </summary>
-        [JsonProperty("interiors")]
-        public List<int> Interiors { get; set; }
-        /// <summary>
         /// The marker trigger used to open the menu.
         /// </summary>
         [JsonProperty("trigger")]
