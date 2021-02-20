@@ -13,9 +13,9 @@ namespace FoodShops.Converters
         public override Vector3 ReadJson(JsonReader reader, Type objectType, Vector3 existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             JObject @object = JObject.Load(reader);
-            int x = @object.ContainsKey("x") ? (int)@object["x"] : 0;
-            int y = @object.ContainsKey("y") ? (int)@object["y"] : 0;
-            int z = @object.ContainsKey("z") ? (int)@object["z"] : 0;
+            float x = @object.ContainsKey("x") ? (float)@object["x"] : 0;
+            float y = @object.ContainsKey("y") ? (float)@object["y"] : 0;
+            float z = @object.ContainsKey("z") ? (float)@object["z"] : 0;
             return new Vector3(x, y, z);
         }
 
