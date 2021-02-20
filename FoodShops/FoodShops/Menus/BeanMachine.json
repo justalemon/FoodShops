@@ -1,0 +1,75 @@
+{
+    "id": "49ca6e7a-38b6-4704-a0e3-58bd2a54f3fe",
+    "meals": [
+        {
+            "name": "Coffee",
+            "price": 2,
+            "health": 10
+        },
+        {
+            "name": "Espresso",
+            "price": 4,
+            "health": 20
+        },
+        {
+            "name": "Cappuccino",
+            "price": 4,
+            "health": 20
+        },
+        {
+            "name": "Latte",
+            "price": 4,
+            "health": 20
+        },
+        {
+            "name": "Mocha",
+            "price": 47,
+            "health": 20
+        },
+        {
+            "name": "Chai Latte",
+            "price": 4,
+            "health": 20
+        },
+        {
+            "name": "High Noon",
+            "price": 10,
+            "health": 50
+        },
+        {
+            "name": "Eco-ffee",
+            "price": 10,
+            "health": 50
+        },
+        {
+            "name": "Speedball",
+            "price": 10,
+            "health": 50
+        },
+        {
+            "name": "Gunkacchino",
+            "price": 10,
+            "health": 50
+        },
+        {
+            "name": "The Braile",
+            "price": 10,
+            "health": 50
+        },
+        {
+            "name": "The Flusher",
+            "price": 10,
+            "health": 50
+        },
+        {
+            "name": "Caffeagra",
+            "price": 10,
+            "health": 50
+        },
+        {
+            "name": "The Big Fruit",
+            "price": 20,
+            "health": 100
+        }
+    ]
+}

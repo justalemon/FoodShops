@@ -1,0 +1,20 @@
+{
+    "name": "Bean Machine",
+    "banner_txd": "",
+    "banner_texture": "",
+    "trigger": {
+        "x": 280.65,
+        "y": -971.93,
+        "z": 28.5
+    },
+    "ped_pos": {
+        "x": 280.53,
+        "y": -973.19,
+        "z": 28.42
+    },
+    "ped_heading": 350.84,
+    "ped_model": "s_f_m_sweatshop_01",
+    "menus": [
+        "49ca6e7a-38b6-4704-a0e3-58bd2a54f3fe"
+    ]
+}
