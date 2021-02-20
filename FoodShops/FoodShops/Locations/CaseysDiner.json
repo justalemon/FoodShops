@@ -1,0 +1,20 @@
+{
+    "name": "Casey's Diner",
+    "banner_txd": "",
+    "banner_texture": "",
+    "trigger": {
+        "x": 798.44,
+        "y": -735,
+        "z": 27.2
+    },
+    "ped_pos": {
+        "x": 799.70,
+        "y": -735.36,
+        "z": 27.99
+    },
+    "ped_heading": 87.71,
+    "ped_model": "s_f_m_sweatshop_01",
+    "menus": [
+        "134a2974-99c5-48cd-a583-4dda8f593da8"
+    ]
+}
