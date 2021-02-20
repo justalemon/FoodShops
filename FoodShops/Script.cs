@@ -77,7 +77,7 @@ namespace FoodShops
                     ScaledTexture texture = null;
                     if (!string.IsNullOrWhiteSpace(location.BannerTXD) && !string.IsNullOrWhiteSpace(location.BannerTexture))
                     {
-                        texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTXD);
+                        texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTexture);
                     }
                     PurchaseMenu menu = new PurchaseMenu(location, texture);
                     locations.Add(location);
