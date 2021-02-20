@@ -11,19 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="FoodShops\Locations\BurgerShot.json">
+    <None Update="FoodShops\Locations\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="FoodShops\Menus\69thStreetDinerIV.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FoodShops\Menus\BurgerShotIV.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FoodShops\Menus\BurgerShotSA.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="FoodShops\Menus\CluckinBellSA.json">
+    <None Update="FoodShops\Menus\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
 
