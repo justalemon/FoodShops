@@ -1,7 +1,7 @@
 {
     "name": "Casey's Diner",
-    "banner_txd": "",
-    "banner_texture": "",
+    "banner_txd": "foodshops",
+    "banner_texture": "caseys_diner",
     "trigger": {
         "x": 798.44,
         "y": -735,

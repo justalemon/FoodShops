@@ -1,7 +1,7 @@
 {
     "name": "Bean Machine",
-    "banner_txd": "",
-    "banner_texture": "",
+    "banner_txd": "foodshops",
+    "banner_texture": "bean_machine",
     "trigger": {
         "x": 280.65,
         "y": -971.93,

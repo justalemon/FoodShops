@@ -1,7 +1,7 @@
 {
     "name": "Chihuahua Hotdogs",
-    "banner_txd": "",
-    "banner_texture": "",
+    "banner_txd": "foodshops",
+    "banner_texture": "chihuahua_hotdogs",
     "trigger": {
         "x": 44.74,
         "y": -1004.44,
