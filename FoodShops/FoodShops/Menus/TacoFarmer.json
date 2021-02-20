@@ -1,0 +1,35 @@
+{
+    "id": "774c71be-3333-4812-aa11-a6384312d285",
+    "meals": [
+        {
+            "name": "Taco al Pastor",
+            "price": 1,
+            "health": 10
+        },
+        {
+            "name": "Taco de Pescado",
+            "price": 2,
+            "health": 20
+        },
+        {
+            "name": "Burrito de Carne",
+            "price": 2,
+            "health": 20
+        },
+        {
+            "name": "Wet Burrito",
+            "price": 3,
+            "health": 30
+        },
+        {
+            "name": "Taco de Camarones",
+            "price": 4,
+            "health": 40
+        },
+        {
+            "name": "San Andreas Burrito",
+            "price": 5,
+            "health": 50
+        }
+    ]
+}
