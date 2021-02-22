@@ -127,6 +127,7 @@ namespace FoodShops
             foreach (ShopLocation location in locations.Keys)
             {
                 location.CreatePed();
+                location.CreateCamera();
                 location.CreateBlip();
             }
             Tick -= FoodShops_Tick_Init;
@@ -178,14 +179,16 @@ namespace FoodShops
         private void FoodShops_Aborted(object sender, EventArgs e)
         {
             pool.HideAll();
-            foreach (ShopLocation location in locations.Keys)
-            {
-                location.DeletePed();
-                location.Blip?.Delete();
-            }
             // Just in case HideAll() didn't worked
             Game.Player.Character.Opacity = 255;
             World.RenderingCamera = null;
+
+            foreach (ShopLocation location in locations.Keys)
+            {
+                location.DeletePed();
+                location.Camera?.Delete();
+                location.Blip?.Delete();
+            }
         }
 
         #endregion

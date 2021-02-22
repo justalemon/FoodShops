@@ -1,6 +1,4 @@
 ﻿using GTA;
-using GTA.Math;
-using GTA.Native;
 using LemonUI.Elements;
 using LemonUI.Menus;
 using System;
@@ -41,15 +39,8 @@ namespace FoodShops
 
         private void PurchaseMenu_Shown(object sender, EventArgs e)
         {
-            Camera camera = World.CreateCamera(location.CamPos, Vector3.Zero, location.CamFOV);
-            if (location.Ped == null)
-            {
-                location.CreatePed();
-            }
-            Function.Call(Hash.POINT_CAM_AT_PED_BONE, camera, location.Ped, (int)Bone.SkelHead, 0, 0, 5, true);
-            location.Ped.Task.LookAt(location.CamPos);
             Game.Player.Character.Opacity = 0;
-            World.RenderingCamera = camera;
+            World.RenderingCamera = location.Camera;
         }
 
         private void PurchaseMenu_Closed(object sender, EventArgs e)

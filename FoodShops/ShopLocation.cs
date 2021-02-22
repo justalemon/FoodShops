@@ -1,6 +1,7 @@
 ﻿using FoodShops.Converters;
 using GTA;
 using GTA.Math;
+using GTA.Native;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -66,6 +67,11 @@ namespace FoodShops
         public List<ShopMenu> Menus { get; set; }
 
         /// <summary>
+        /// The camera used when the menu is open.
+        /// </summary>
+        [JsonIgnore]
+        public Camera Camera { get; private set; }
+        /// <summary>
         /// The Blip used to mark the location of the Food Shop.
         /// </summary>
         [JsonIgnore]
@@ -76,6 +82,15 @@ namespace FoodShops
         [JsonIgnore]
         public Ped Ped { get; private set; }
 
+        /// <summary>
+        /// Creates the camera.
+        /// </summary>
+        public void CreateCamera()
+        {
+            Camera = World.CreateCamera(CamPos, Vector3.Zero, CamFOV);
+            Function.Call(Hash.POINT_CAM_AT_PED_BONE, Camera, Ped, (int)Bone.SkelHead, 0, 0, 5, true);
+            Ped.Task.LookAt(CamPos);
+        }
         /// <summary>
         /// Creates the blip marking the store's location.
         /// </summary>
