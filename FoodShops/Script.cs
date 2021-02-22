@@ -127,6 +127,7 @@ namespace FoodShops
             foreach (ShopLocation location in locations.Keys)
             {
                 location.CreatePed();
+                location.CreateBlip();
             }
             Tick -= FoodShops_Tick_Init;
             Tick += FoodShops_Tick_Run;
@@ -180,6 +181,7 @@ namespace FoodShops
             foreach (ShopLocation location in locations.Keys)
             {
                 location.DeletePed();
+                location.Blip?.Delete();
             }
             // Just in case HideAll() didn't worked
             Game.Player.Character.Opacity = 255;

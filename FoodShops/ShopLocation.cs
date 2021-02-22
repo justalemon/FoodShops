@@ -66,11 +66,30 @@ namespace FoodShops
         public List<ShopMenu> Menus { get; set; }
 
         /// <summary>
+        /// The Blip used to mark the location of the Food Shop.
+        /// </summary>
+        [JsonIgnore]
+        public Blip Blip { get; private set; }
+        /// <summary>
         /// The Ped over the counter that speaks with the player.
         /// </summary>
         [JsonIgnore]
         public Ped Ped { get; private set; }
 
+        /// <summary>
+        /// Creates the blip marking the store's location.
+        /// </summary>
+        public void CreateBlip()
+        {
+            // Delete the blip if is already present
+            Blip?.Delete();
+            // Then, go ahead and create a new blip
+            Blip = World.CreateBlip(Trigger);
+            Blip.Sprite = BlipSprite.Store;
+            Blip.Color = BlipColor.NetPlayer3;
+            Blip.Name = $"Food Shop: {Name}";
+            Blip.IsShortRange = true;
+        }
         /// <summary>
         /// Creates the ped over the counter.
         /// </summary>
