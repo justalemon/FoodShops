@@ -76,7 +76,15 @@ namespace FoodShops
         /// </summary>
         public void CreatePed()
         {
+            // Delete the ped if it exists
             DeletePed();
+            // Request the model and wait until is loaded
+            PedModel.Request();
+            while (!PedModel.IsLoaded)
+            {
+                Script.Yield();
+            }
+            // And finally create the ped as usual
             Ped = World.CreatePed(PedModel, PedPos, PedHeading);
             Ped.BlockPermanentEvents = true;
             Ped.CanBeTargetted = false;
