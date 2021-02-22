@@ -176,6 +176,9 @@ namespace FoodShops
             {
                 location.DeletePed();
             }
+            // Just in case HideAll() didn't worked
+            Game.Player.Character.Opacity = 255;
+            World.RenderingCamera = null;
         }
 
         #endregion

@@ -14,6 +14,12 @@
     },
     "ped_heading": 301.9149,
     "ped_model": "csb_burgerdrug",
+    "cam_pos": {
+        "x": -1193.95,
+        "y": -892.85,
+        "z": 14.64
+    },
+    "cam_fov": 40,
     "menus": [
         "41fcb726-80ff-4471-9ba1-03a7e61cb1b4"
     ]

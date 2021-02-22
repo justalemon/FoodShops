@@ -14,6 +14,12 @@
     },
     "ped_heading": 216.69,
     "ped_model": "s_f_m_sweatshop_01",
+    "cam_pos": {
+        "x": -1193.95,
+        "y": -892.85,
+        "z": 14.64
+    },
+    "cam_fov": 40,
     "menus": [
         "774c71be-3333-4812-aa11-a6384312d285"
     ]

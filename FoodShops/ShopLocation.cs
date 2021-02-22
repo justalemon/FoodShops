@@ -49,6 +49,17 @@ namespace FoodShops
         [JsonProperty("ped_model")]
         public Model PedModel { get; set; }
         /// <summary>
+        /// The position of the camera.
+        /// </summary>
+        [JsonProperty("cam_pos")]
+        [JsonConverter(typeof(Vector3Converter))]
+        public Vector3 CamPos { get; set; }
+        /// <summary>
+        /// The Field of View of the camera.
+        /// </summary>
+        [JsonProperty("cam_fov")]
+        public float CamFOV { get; set; }
+        /// <summary>
         /// The Meal Menus that the player can consume.
         /// </summary>
         [JsonProperty("menus")]
