@@ -47,12 +47,14 @@ namespace FoodShops
                 location.CreatePed();
             }
             Function.Call(Hash.POINT_CAM_AT_PED_BONE, camera, location.Ped, (int)Bone.SkelHead, 0, 0, 5, true);
+            location.Ped.Task.LookAt(location.CamPos);
             Game.Player.Character.Opacity = 0;
             World.RenderingCamera = camera;
         }
 
         private void PurchaseMenu_Closed(object sender, EventArgs e)
         {
+            location.Ped?.Task.ClearLookAt();
             Game.Player.Character.Opacity = 255;
             World.RenderingCamera = null;
         }
