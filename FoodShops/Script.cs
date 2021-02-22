@@ -80,7 +80,6 @@ namespace FoodShops
                     PurchaseMenu menu = new PurchaseMenu(location, texture);
                     pool.Add(menu);
                     locations.Add(location, menu);
-                    location.CreatePed();
                 }
             }
             else
@@ -89,7 +88,7 @@ namespace FoodShops
             }
 
             // Finally, add the tick event and start working
-            Tick += FoodShops_Tick;
+            Tick += FoodShops_Tick_Init;
             Aborted += FoodShops_Aborted;
         }
 
@@ -118,7 +117,16 @@ namespace FoodShops
 
         #region Events
 
-        private void FoodShops_Tick(object sender, EventArgs e)
+        private void FoodShops_Tick_Init(object sender, EventArgs e)
+        {
+            foreach (ShopLocation location in locations.Keys)
+            {
+                location.CreatePed();
+            }
+            Tick -= FoodShops_Tick_Init;
+            Tick += FoodShops_Tick_Run;
+        }
+        private void FoodShops_Tick_Run(object sender, EventArgs e)
         {
             // Process the contents of the menus and return if anything is open
             if (pool.AreAnyVisible)
