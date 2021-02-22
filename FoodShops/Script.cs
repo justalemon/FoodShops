@@ -1,7 +1,6 @@
 ﻿using FoodShops.Converters;
 using GTA;
 using GTA.Math;
-using GTA.Native;
 using GTA.UI;
 using LemonUI;
 using LemonUI.Elements;
