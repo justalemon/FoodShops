@@ -3,9 +3,9 @@
     "banner_txd": "foodshops",
     "banner_texture": "caseys_diner",
     "trigger": {
-        "x": 798.44,
-        "y": -735,
-        "z": 27.2
+        "x": 798.23,
+        "y": -735.29,
+        "z": 27
     },
     "ped_pos": {
         "x": 799.70,
