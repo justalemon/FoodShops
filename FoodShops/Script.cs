@@ -178,6 +178,8 @@ namespace FoodShops
 
         private void FoodShops_Aborted(object sender, EventArgs e)
         {
+            Game.Player.CanControlCharacter = true;
+
             pool.HideAll();
             // Just in case HideAll() didn't worked
             Game.Player.Character.Opacity = 255;

@@ -1,4 +1,5 @@
 ﻿using GTA;
+using GTA.Native;
 using GTA.UI;
 using LemonUI.Menus;
 using PlayerCompanion;
@@ -31,10 +32,34 @@ namespace FoodShops
 
         private void PurchaseItem_Activated(object sender, EventArgs e)
         {
+            // If the sender is not a Purchase Menu
+            if (!(sender is PurchaseMenu menu))
+            {
+                return;
+            }
+
             // if the player does not has enough money to buy this meal, notify it and return
             if (Companion.Wallet.Money < meal.Price)
             {
                 Notification.Show("You don't have enough money to buy this!");
+                return;
+            }
+
+            // If the player has reached the meal limit, make him puke
+            if (menu.MealsEaten >= 5)
+            {
+                Game.Player.Character.HealthFloat = menu.HealthOnOpened;
+                menu.Close();
+                Game.Player.CanControlCharacter = false;
+
+                Function.Call(Hash.REQUEST_ANIM_DICT, "missfam5_blackout");
+                while (!Function.Call<bool>(Hash.HAS_ANIM_DICT_LOADED, "missfam5_blackout"))
+                {
+                    Script.Yield();
+                }
+                Game.Player.Character.Task.PlayAnimation("missfam5_blackout", "vomit");
+                Script.Wait(15000);  // Native checks are broken, we need to specify it manually
+                Game.Player.CanControlCharacter = true;
                 return;
             }
 
@@ -45,6 +70,7 @@ namespace FoodShops
             {
                 Game.Player.Character.HealthFloat = health;
             }
+            menu.MealsEaten += 1;
         }
 
         #endregion

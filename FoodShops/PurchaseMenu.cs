@@ -18,6 +18,19 @@ namespace FoodShops
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// The number of meals that the player has eaten on this menu.
+        /// </summary>
+        public int MealsEaten { get; set; } = 0;
+        /// <summary>
+        /// The health that the player had when the menu was opened.
+        /// </summary>
+        public float HealthOnOpened { get; set; } = -1;
+
+        #endregion
+
         #region Constructor
 
         public PurchaseMenu(ShopLocation location, ScaledTexture banner) : base("", location.Name, "", banner)
@@ -42,6 +55,9 @@ namespace FoodShops
 
         private void PurchaseMenu_Shown(object sender, EventArgs e)
         {
+            MealsEaten = 0;
+            HealthOnOpened = Game.Player.Character.HealthFloat;
+
             Game.Player.Character.Opacity = 0;
             World.RenderingCamera = location.Camera;
         }
@@ -54,6 +70,8 @@ namespace FoodShops
 
         private void PurchaseMenu_Closed(object sender, EventArgs e)
         {
+            HealthOnOpened = -1;
+
             location.Ped?.Task.ClearLookAt();
             Game.Player.Character.Opacity = 255;
             World.RenderingCamera = null;
