@@ -83,59 +83,42 @@ namespace FoodShops
         public Ped Ped { get; private set; }
 
         /// <summary>
-        /// Creates the camera.
+        /// Initializes the Entities and Camera.
         /// </summary>
-        public void CreateCamera()
+        public void Initialize()
         {
-            Camera = World.CreateCamera(CamPos, Vector3.Zero, CamFOV);
-            Function.Call(Hash.POINT_CAM_AT_PED_BONE, Camera, Ped, (int)Bone.SkelHead, 0, 0, 5, true);
-            Ped.Task.LookAt(CamPos);
-        }
-        /// <summary>
-        /// Creates the blip marking the store's location.
-        /// </summary>
-        public void CreateBlip()
-        {
-            // Delete the blip if is already present
-            Blip?.Delete();
-            // Then, go ahead and create a new blip
-            Blip = World.CreateBlip(Trigger);
-            Blip.Sprite = BlipSprite.Store;
-            Blip.Color = BlipColor.NetPlayer3;
-            Blip.Name = $"Food Shop: {Name}";
-            Blip.IsShortRange = true;
-        }
-        /// <summary>
-        /// Creates the ped over the counter.
-        /// </summary>
-        public void CreatePed()
-        {
-            // Delete the ped if it exists
-            DeletePed();
-            // Request the model and wait until is loaded
+            // Request the ped and create it
             PedModel.Request();
             while (!PedModel.IsLoaded)
             {
                 Script.Yield();
             }
-            // And finally create the ped as usual
             Ped = World.CreatePed(PedModel, PedPos, PedHeading);
             Ped.BlockPermanentEvents = true;
             Ped.CanBeTargetted = false;
             Ped.CanRagdoll = false;
             Ped.CanWrithe = false;
             Ped.IsInvincible = true;
+            PedModel.MarkAsNoLongerNeeded();
+            // Then, create the blip of the Food Shop
+            Blip = World.CreateBlip(Trigger);
+            Blip.Sprite = BlipSprite.Store;
+            Blip.Color = BlipColor.NetPlayer3;
+            Blip.Name = $"Food Shop: {Name}";
+            Blip.IsShortRange = true;
+            // Finally, create the camera
+            Camera = World.CreateCamera(CamPos, Vector3.Zero, CamFOV);
+            Function.Call(Hash.POINT_CAM_AT_PED_BONE, Camera, Ped, (int)Bone.SkelHead, 0, 0, 5, true);
+            Ped.Task.LookAt(CamPos);
         }
         /// <summary>
-        /// Deletes the existing ped, if any.
+        /// Cleans up the entities and camera.
         /// </summary>
-        public void DeletePed()
+        public void DoCleanup()
         {
-            if (Ped != null)
-            {
-                Ped.Delete();
-            }
-            Ped = null;
+            Ped?.Delete();
+            Blip?.Delete();
+            Camera?.Delete();
         }
     }
 }

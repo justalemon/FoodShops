@@ -126,9 +126,7 @@ namespace FoodShops
         {
             foreach (ShopLocation location in locations.Keys)
             {
-                location.CreatePed();
-                location.CreateCamera();
-                location.CreateBlip();
+                location.Initialize();
             }
             Tick -= FoodShops_Tick_Init;
             Tick += FoodShops_Tick_Run;
@@ -187,9 +185,7 @@ namespace FoodShops
 
             foreach (ShopLocation location in locations.Keys)
             {
-                location.DeletePed();
-                location.Camera?.Delete();
-                location.Blip?.Delete();
+                location.DoCleanup();
             }
         }
 
