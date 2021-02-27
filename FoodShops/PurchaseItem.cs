@@ -66,7 +66,7 @@ namespace FoodShops
             // Otherwise, remove the money and heal the player (if possible)
             Companion.Wallet.Money -= meal.Price;
             float health = Game.Player.Character.HealthFloat + meal.Health;
-            if (health < Game.Player.Character.MaxHealthFloat)
+            if (health <= Game.Player.Character.MaxHealthFloat)
             {
                 Game.Player.Character.HealthFloat = health;
             }
