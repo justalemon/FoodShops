@@ -1,7 +1,9 @@
 ﻿using GTA;
+using GTA.Math;
 using LemonUI.Elements;
 using LemonUI.Menus;
 using System;
+using System.ComponentModel;
 
 namespace FoodShops
 {
@@ -30,6 +32,7 @@ namespace FoodShops
                 }
             }
             Shown += PurchaseMenu_Shown;
+            Closing += PurchaseMenu_Closing;
             Closed += PurchaseMenu_Closed;
         }
 
@@ -41,6 +44,12 @@ namespace FoodShops
         {
             Game.Player.Character.Opacity = 0;
             World.RenderingCamera = location.Camera;
+        }
+
+        private void PurchaseMenu_Closing(object sender, CancelEventArgs e)
+        {
+            Vector3 pos = Game.Player.Character.Position;
+            Game.Player.Character.PositionNoOffset = new Vector3(location.Trigger.X, location.Trigger.Y, pos.Z);
         }
 
         private void PurchaseMenu_Closed(object sender, EventArgs e)
