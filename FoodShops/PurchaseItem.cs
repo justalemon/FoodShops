@@ -58,7 +58,10 @@ namespace FoodShops
                     Script.Yield();
                 }
                 Game.Player.Character.Task.PlayAnimation("missfam5_blackout", "vomit");
-                Script.Wait(15000);  // Native checks are broken, we need to specify it manually
+                while (Function.Call<float>(Hash.GET_ENTITY_ANIM_CURRENT_TIME, Game.Player.Character, "missfam5_blackout", "vomit") < 0.99f)
+                {
+                    Script.Yield();
+                }
                 Game.Player.CanControlCharacter = true;
                 return;
             }
