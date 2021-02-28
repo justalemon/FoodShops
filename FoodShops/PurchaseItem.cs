@@ -41,6 +41,8 @@ namespace FoodShops
             // if the player does not has enough money to buy this meal, notify it and return
             if (Companion.Wallet.Money < meal.Price)
             {
+                menu.Location.Ped.PlayAmbientSpeech("GENERIC_CURSE_MED");
+
                 Notification.Show("You don't have enough money to buy this!");
                 return;
             }
@@ -48,6 +50,8 @@ namespace FoodShops
             // If the player has reached the meal limit, make him puke
             if (menu.MealsEaten >= 5)
             {
+                menu.Location.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
+
                 Game.Player.Character.HealthFloat = menu.HealthOnOpened;
                 menu.Close();
                 Game.Player.CanControlCharacter = false;
@@ -67,6 +71,8 @@ namespace FoodShops
             }
 
             // Otherwise, remove the money and heal the player (if possible)
+            menu.Location.Ped.PlayAmbientSpeech("GENERIC_THANKS");
+
             Companion.Wallet.Money -= meal.Price;
             float health = Game.Player.Character.HealthFloat + meal.Health;
             if (health <= Game.Player.Character.MaxHealthFloat)

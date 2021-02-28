@@ -1,5 +1,6 @@
 ﻿using GTA;
 using GTA.Math;
+using GTA.Native;
 using LemonUI.Elements;
 using LemonUI.Menus;
 using System;
@@ -53,6 +54,8 @@ namespace FoodShops
 
         private void PurchaseMenu_Shown(object sender, EventArgs e)
         {
+            Location.Ped.PlayAmbientSpeech("GENERIC_HI");
+
             MealsEaten = 0;
             HealthOnOpened = Game.Player.Character.HealthFloat;
 
@@ -68,6 +71,8 @@ namespace FoodShops
 
         private void PurchaseMenu_Closed(object sender, EventArgs e)
         {
+            Location.Ped.PlayAmbientSpeech("GENERIC_BYE");
+
             HealthOnOpened = -1;
 
             Location.Ped?.Task.ClearLookAt();
