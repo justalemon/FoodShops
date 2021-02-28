@@ -94,6 +94,7 @@ namespace FoodShops
                 Script.Yield();
             }
             Ped = World.CreatePed(PedModel, PedPos, PedHeading);
+            Ped.IsPositionFrozen = true;
             Ped.BlockPermanentEvents = true;
             Ped.CanBeTargetted = false;
             Ped.CanRagdoll = false;
