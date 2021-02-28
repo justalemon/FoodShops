@@ -12,14 +12,12 @@ namespace FoodShops
     /// </summary>
     public class PurchaseMenu : NativeMenu
     {
-        #region Fields
-
-        private readonly ShopLocation location;
-
-        #endregion
-
         #region Properties
 
+        /// <summary>
+        /// The location of the shop that this menu manages.
+        /// </summary>
+        public ShopLocation Location { get; }
         /// <summary>
         /// The number of meals that the player has eaten on this menu.
         /// </summary>
@@ -35,7 +33,7 @@ namespace FoodShops
 
         public PurchaseMenu(ShopLocation location, ScaledTexture banner) : base("", location.Name, "", banner)
         {
-            this.location = location;
+            Location = location;
             //NoItemsText = "This Shop does not has any food or drinks to be purchased.";
             foreach (ShopMenu menu in location.Menus)
             {
@@ -59,20 +57,20 @@ namespace FoodShops
             HealthOnOpened = Game.Player.Character.HealthFloat;
 
             Game.Player.Character.Opacity = 0;
-            World.RenderingCamera = location.Camera;
+            World.RenderingCamera = Location.Camera;
         }
 
         private void PurchaseMenu_Closing(object sender, CancelEventArgs e)
         {
             Vector3 pos = Game.Player.Character.Position;
-            Game.Player.Character.PositionNoOffset = new Vector3(location.Trigger.X, location.Trigger.Y, pos.Z);
+            Game.Player.Character.PositionNoOffset = new Vector3(Location.Trigger.X, Location.Trigger.Y, pos.Z);
         }
 
         private void PurchaseMenu_Closed(object sender, EventArgs e)
         {
             HealthOnOpened = -1;
 
-            location.Ped?.Task.ClearLookAt();
+            Location.Ped?.Task.ClearLookAt();
             Game.Player.Character.Opacity = 255;
             World.RenderingCamera = null;
         }
