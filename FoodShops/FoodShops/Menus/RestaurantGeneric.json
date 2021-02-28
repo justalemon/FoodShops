@@ -1,0 +1,30 @@
+{
+    "id": "d499be92-a968-43e4-8ff7-a9ddc776b251",
+    "meals": [
+        {
+            "name": "Salad",
+            "price": 10,
+            "health": 20
+        },
+        {
+            "name": "Empanadas",
+            "price": 20,
+            "health": 40
+        },
+        {
+            "name": "Pasta",
+            "price": 30,
+            "health": 60
+        },
+        {
+            "name": "Lasagna",
+            "price": 40,
+            "health": 80
+        },
+        {
+            "name": "BBQ",
+            "price": 50,
+            "health": 100
+        }
+    ]
+}
