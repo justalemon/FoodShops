@@ -20,7 +20,9 @@ First, drag and drop all of the files inside of the 7zip into your **scripts** d
 
 After installing the mod, you will see some pink markers on the radar and pause menu map. The pink markers represent the food shops that are available around you.
 
-To see the food available for purchase, go to the red marker and press the button shown on the screen to open the 
+To see the food available for purchase, go to the red marker and press the button shown on the screen to open the purchase menu. To buy something to eat, press enter or click it.
+
+Please note that you will puke if you eat too much.
 
 For adding new food shops around the map, please check [the wiki](https://github.com/justalemon/FoodShops/wiki).
 
