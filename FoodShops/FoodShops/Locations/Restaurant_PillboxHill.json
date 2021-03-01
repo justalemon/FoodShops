@@ -1,7 +1,7 @@
 {
     "name": "Restaurant",
-    "banner_txd": "foodshops",
-    "banner_texture": "restaurant",
+    "banner_txd": "",
+    "banner_texture": "",
     "trigger": {
         "x": 124.25,
         "y": -1034.761,
