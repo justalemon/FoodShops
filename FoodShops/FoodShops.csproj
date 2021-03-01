@@ -17,6 +17,15 @@
     <None Update="FoodShops\Menus\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="GGOV\Names\Vanilla.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="INSTALL MANUALLY\README.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="INSTALL MANUALLY\*.ytd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
 
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PlayerCompanion" Version="1.0.1">
