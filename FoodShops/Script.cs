@@ -72,9 +72,9 @@ namespace FoodShops
                     }
                     string contents = File.ReadAllText(file);
                     ShopLocation location = JsonConvert.DeserializeObject<ShopLocation>(contents, converter);
-                    if (!location.PedModel.IsPed)
+                    if (!location.PedInfo.Model.IsPed)
                     {
-                        Notification.Show($"~o~Warning~s~: Model {location.PedModel} is not a Ped!");
+                        Notification.Show($"~o~Warning~s~: Model {location.PedInfo.Model} is not a Ped!");
                         continue;
                     }
                     ScaledTexture texture = null;

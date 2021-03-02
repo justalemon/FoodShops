@@ -34,32 +34,15 @@ namespace FoodShops
         [JsonConverter(typeof(Vector3Converter))]
         public Vector3 Trigger { get; set; }
         /// <summary>
-        /// The position of the ped over the counter.
+        /// The information of the shop ped.
         /// </summary>
-        [JsonProperty("ped_pos", Required = Required.Always)]
-        [JsonConverter(typeof(Vector3Converter))]
-        public Vector3 PedPos { get; set; }
+        [JsonProperty("ped", Required = Required.Always)]
+        public ShopPed PedInfo { get; set; }
         /// <summary>
-        /// The Heading of the ped.
+        /// The information of the shop camera.
         /// </summary>
-        [JsonProperty("ped_heading", Required = Required.Always)]
-        public float PedHeading { get; set; }
-        /// <summary>
-        /// The model of the ped.
-        /// </summary>
-        [JsonProperty("ped_model", Required = Required.Always)]
-        public Model PedModel { get; set; }
-        /// <summary>
-        /// The position of the camera.
-        /// </summary>
-        [JsonProperty("cam_pos", Required = Required.Always)]
-        [JsonConverter(typeof(Vector3Converter))]
-        public Vector3 CamPos { get; set; }
-        /// <summary>
-        /// The Field of View of the camera.
-        /// </summary>
-        [JsonProperty("cam_fov", Required = Required.Always)]
-        public float CamFOV { get; set; }
+        [JsonProperty("camera", Required = Required.Always)]
+        public ShopCamera CameraInfo { get; set; }
         /// <summary>
         /// The Meal Menus that the player can consume.
         /// </summary>
@@ -88,19 +71,19 @@ namespace FoodShops
         public void Initialize()
         {
             // Request the ped and create it
-            PedModel.Request();
-            while (!PedModel.IsLoaded)
+            PedInfo.Model.Request();
+            while (!PedInfo.Model.IsLoaded)
             {
                 Script.Yield();
             }
-            Ped = World.CreatePed(PedModel, PedPos, PedHeading);
+            Ped = World.CreatePed(PedInfo.Model, PedInfo.Position, PedInfo.Heading);
             Ped.IsPositionFrozen = true;
             Ped.BlockPermanentEvents = true;
             Ped.CanBeTargetted = false;
             Ped.CanRagdoll = false;
             Ped.CanWrithe = false;
             Ped.IsInvincible = true;
-            PedModel.MarkAsNoLongerNeeded();
+            PedInfo.Model.MarkAsNoLongerNeeded();
             // Then, create the blip of the Food Shop
             Blip = World.CreateBlip(Trigger);
             Blip.Sprite = BlipSprite.Store;
@@ -108,9 +91,9 @@ namespace FoodShops
             Blip.Name = $"Food Shop: {Name}";
             Blip.IsShortRange = true;
             // Finally, create the camera
-            Camera = World.CreateCamera(CamPos, Vector3.Zero, CamFOV);
+            Camera = World.CreateCamera(CameraInfo.Position, Vector3.Zero, CameraInfo.FOV);
             Function.Call(Hash.POINT_CAM_AT_PED_BONE, Camera, Ped, (int)Bone.SkelHead, 0, 0, 5, true);
-            Ped.Task.LookAt(CamPos);
+            Ped.Task.LookAt(CameraInfo.Position);
         }
         /// <summary>
         /// Cleans up the entities and camera.
