@@ -1,6 +1,7 @@
 ﻿using FoodShops.Converters;
 using GTA;
 using GTA.Math;
+using GTA.Native;
 using GTA.UI;
 using LemonUI;
 using LemonUI.Elements;
@@ -79,6 +80,7 @@ namespace FoodShops
                         Notification.Show($"~o~Warning~s~: Non JSON file found in the Locations Directory! ({Path.GetFileName(file)})");
                         continue;
                     }
+
                     string contents = File.ReadAllText(file);
                     ShopLocation location = null;
                     try
@@ -90,11 +92,22 @@ namespace FoodShops
                         Notification.Show($"~o~Warning~s~: Unable to load Location {Path.GetFileName(file)}:\n{e.Message}");
                         continue;
                     }
+
+                    if (location.Interior.HasValue)
+                    {
+                        if (Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, location.Interior.Value.X, location.Interior.Value.Y, location.Interior.Value.Z) == 0)
+                        {
+                            Notification.Show($"~o~Warning~s~: Interior of {location.Name} is not available! Maybe you forgot to install it?");
+                            continue;
+                        }
+                    }
+
                     if (!location.PedInfo.Model.IsPed)
                     {
                         Notification.Show($"~o~Warning~s~: Model {location.PedInfo.Model} is not a Ped!");
                         continue;
                     }
+
                     ScaledTexture texture = null;
                     if (!string.IsNullOrWhiteSpace(location.BannerTXD) && !string.IsNullOrWhiteSpace(location.BannerTexture))
                     {

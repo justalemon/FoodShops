@@ -34,6 +34,12 @@ namespace FoodShops
         [JsonConverter(typeof(Vector3Converter))]
         public Vector3 Trigger { get; set; }
         /// <summary>
+        /// The location where an interior should be checked.
+        /// </summary>
+        [JsonProperty("interior", Required = Required.AllowNull)]
+        [JsonConverter(typeof(Vector3Converter))]
+        public Vector3? Interior { get; set; }
+        /// <summary>
         /// The information of the shop ped.
         /// </summary>
         [JsonProperty("ped", Required = Required.Always)]
