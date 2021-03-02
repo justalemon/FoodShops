@@ -49,7 +49,16 @@ namespace FoodShops
                         continue;
                     }
                     string contents = File.ReadAllText(file);
-                    ShopMenu menu = JsonConvert.DeserializeObject<ShopMenu>(contents);
+                    ShopMenu menu = null;
+                    try
+                    {
+                        menu = JsonConvert.DeserializeObject<ShopMenu>(contents);
+                    }
+                    catch (JsonSerializationException e)
+                    {
+                        Notification.Show($"~o~Warning~s~: Unable to load Menu {Path.GetFileName(file)}:\n{e.Message}");
+                        continue;
+                    }
                     menus.Add(menu);
                 }
             }
@@ -71,7 +80,16 @@ namespace FoodShops
                         continue;
                     }
                     string contents = File.ReadAllText(file);
-                    ShopLocation location = JsonConvert.DeserializeObject<ShopLocation>(contents, converter);
+                    ShopLocation location = null;
+                    try
+                    {
+                        location = JsonConvert.DeserializeObject<ShopLocation>(contents, converter);
+                    }
+                    catch (JsonSerializationException e)
+                    {
+                        Notification.Show($"~o~Warning~s~: Unable to load Location {Path.GetFileName(file)}:\n{e.Message}");
+                        continue;
+                    }
                     if (!location.PedInfo.Model.IsPed)
                     {
                         Notification.Show($"~o~Warning~s~: Model {location.PedInfo.Model} is not a Ped!");
