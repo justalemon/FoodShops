@@ -75,10 +75,12 @@ namespace FoodShops
 
             Companion.Wallet.Money -= meal.Price;
             float health = Game.Player.Character.HealthFloat + meal.Health;
-            if (health <= Game.Player.Character.MaxHealthFloat)
+            float maxHealth = Game.Player.Character.MaxHealthFloat;
+            if (health > maxHealth)
             {
-                Game.Player.Character.HealthFloat = health;
+                health = maxHealth;
             }
+            Game.Player.Character.HealthFloat = health;
             menu.MealsEaten += 1;
         }
 
