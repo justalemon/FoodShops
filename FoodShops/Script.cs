@@ -126,27 +126,6 @@ namespace FoodShops
 
         #endregion
 
-        #region Tools
-
-        private void DisableControls()
-        {
-            Game.DisableControlThisFrame(Control.LookUpDown);
-            Game.DisableControlThisFrame(Control.LookLeftRight);
-
-            Game.DisableControlThisFrame(Control.MoveLeftRight);
-            Game.DisableControlThisFrame(Control.MoveUpDown);
-            Game.DisableControlThisFrame(Control.MoveUpOnly);
-            Game.DisableControlThisFrame(Control.MoveDownOnly);
-            Game.DisableControlThisFrame(Control.MoveLeftOnly);
-            Game.DisableControlThisFrame(Control.MoveRightOnly);
-            Game.DisableControlThisFrame(Control.MoveUp);
-            Game.DisableControlThisFrame(Control.MoveDown);
-            Game.DisableControlThisFrame(Control.MoveLeft);
-            Game.DisableControlThisFrame(Control.MoveRight);
-        }
-
-        #endregion
-
         #region Events
 
         private void FoodShops_Tick_Init(object sender, EventArgs e)
@@ -161,14 +140,9 @@ namespace FoodShops
         private void FoodShops_Tick_Run(object sender, EventArgs e)
         {
             // Process the contents of the menus and return if anything is open
-            if (pool.AreAnyVisible)
-            {
-                DisableControls();
-            }
             pool.Process();
             if (pool.AreAnyVisible)
             {
-                DisableControls();
                 return;
             }
 
