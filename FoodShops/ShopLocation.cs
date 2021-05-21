@@ -56,6 +56,10 @@ namespace FoodShops
         public List<ShopMenu> Menus { get; set; }
 
         /// <summary>
+        /// The menu used at this location.
+        /// </summary>
+        public PurchaseMenu Menu { get; internal set; }
+        /// <summary>
         /// The camera used when the menu is open.
         /// </summary>
         [JsonIgnore]

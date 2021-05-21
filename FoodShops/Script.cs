@@ -23,13 +23,8 @@ namespace FoodShops
         #region Fields
 
         internal static string location = Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath, "FoodShops");
-
-        #endregion
-
-        #region Properties
-
         private readonly ObjectPool pool = new ObjectPool();
-        private readonly Dictionary<ShopLocation, PurchaseMenu> locations = new Dictionary<ShopLocation, PurchaseMenu>();
+        private readonly List<ShopLocation> locations = new List<ShopLocation>();
 
         #endregion
 
@@ -115,7 +110,8 @@ namespace FoodShops
                     }
                     PurchaseMenu menu = new PurchaseMenu(location, texture);
                     pool.Add(menu);
-                    locations.Add(location, menu);
+                    location.Menu = menu;
+                    locations.Add(location);
                 }
             }
             else
@@ -155,7 +151,7 @@ namespace FoodShops
 
         private void FoodShops_Tick_Init(object sender, EventArgs e)
         {
-            foreach (ShopLocation location in locations.Keys)
+            foreach (ShopLocation location in locations)
             {
                 location.Initialize();
             }
@@ -180,25 +176,26 @@ namespace FoodShops
             Vector3 pos = Game.Player.Character.Position;
 
             // Iterate over the available interiors
-            foreach (KeyValuePair<ShopLocation, PurchaseMenu> location in locations)
+            foreach (ShopLocation location in locations)
             {
                 // If the player is too far from the location or is not on the correct interior, skip it
-                if (pos.DistanceTo(location.Key.Trigger) > 50)
+                if (pos.DistanceTo(location.Trigger) > 50)
                 {
                     continue;
                 }
 
                 // Otherwise, draw the marker in the correct position
-                World.DrawMarker(MarkerType.VerticalCylinder, location.Key.Trigger, Vector3.Zero, Vector3.Zero, new Vector3(0.5f, 0.5f, 0.5f), Color.Red);
+                World.DrawMarker(MarkerType.VerticalCylinder, location.Trigger, Vector3.Zero, Vector3.Zero, new Vector3(0.5f, 0.5f, 0.5f), Color.Red);
 
                 // If the player is very close to the ma1rker, tell him to press interact
-                if (pos.DistanceTo(location.Key.Trigger) < 1.25f)
+                if (pos.DistanceTo(location.Trigger) < 1.25f)
                 {
                     Screen.ShowHelpTextThisFrame("Press ~INPUT_CONTEXT~ to buy some food.");
 
                     if (Game.IsControlJustPressed(Control.Context))
                     {
-                        location.Value.Visible = true;
+                        location.Menu.Visible = true;
+                        current = location;
                         return;
                     }
                 }
@@ -214,7 +211,7 @@ namespace FoodShops
             Game.Player.Character.Opacity = 255;
             World.RenderingCamera = null;
 
-            foreach (ShopLocation location in locations.Keys)
+            foreach (ShopLocation location in locations)
             {
                 location.DoCleanup();
             }
