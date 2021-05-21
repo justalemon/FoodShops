@@ -140,6 +140,16 @@ namespace FoodShops
         }
         private void FoodShops_Tick_Run(object sender, EventArgs e)
         {
+            // If the player is wanted, hide the current location and return
+            if (Game.Player.WantedLevel > 0)
+            {
+                if (current != null)
+                {
+                    current.Menu.MealsEaten = 0;
+                    current.Menu.Visible = false;
+                }
+                return;
+            }
             // Process the contents of the menus and return if anything is open
             pool.Process();
             if (pool.AreAnyVisible)
