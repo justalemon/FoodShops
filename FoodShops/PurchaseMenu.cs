@@ -59,6 +59,7 @@ namespace FoodShops
             MealsEaten = 0;
             HealthOnOpened = Game.Player.Character.HealthFloat;
 
+            Game.Player.CanControlCharacter = false;
             Game.Player.Character.Opacity = 0;
             World.RenderingCamera = Location.Camera;
         }
@@ -71,13 +72,35 @@ namespace FoodShops
 
         private void PurchaseMenu_Closed(object sender, EventArgs e)
         {
-            Location.Ped.PlayAmbientSpeech("GENERIC_BYE");
-
             HealthOnOpened = -1;
-
-            Location.Ped?.Task.ClearLookAt();
             Game.Player.Character.Opacity = 255;
-            World.RenderingCamera = null;
+            Location.Ped?.Task.ClearLookAt();
+
+            if (MealsEaten > 0)
+            {
+                Function.Call(Hash.REQUEST_ANIM_DICT, "mp_player_inteat@burger");
+                while (!Function.Call<bool>(Hash.HAS_ANIM_DICT_LOADED, "mp_player_inteat@burger"))
+                {
+                    Script.Yield();
+                }
+
+                World.RenderingCamera = null;
+                Game.Player.Character.Task.PlayAnimation("mp_player_inteat@burger", "mp_player_int_eat_burger_fp");
+                while (!Function.Call<bool>(Hash.IS_ENTITY_PLAYING_ANIM, Game.Player.Character, "mp_player_inteat@burger", "mp_player_int_eat_burger_fp", 3))
+                {
+                    Script.Yield();
+                }
+                int duration = (int)Function.Call<float>(Hash.GET_ENTITY_ANIM_TOTAL_TIME, Game.Player.Character, "mp_player_inteat@burger", "mp_player_int_eat_burger_fp");
+                Script.Wait(duration);
+
+                Location.Ped.PlayAmbientSpeech("GENERIC_BYE");
+            }
+            else
+            {
+                World.RenderingCamera = null;
+            }
+
+            Game.Player.CanControlCharacter = true;
         }
 
         #endregion

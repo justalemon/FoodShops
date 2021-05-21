@@ -52,6 +52,8 @@ namespace FoodShops
             {
                 menu.Location.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
 
+                menu.MealsEaten = 0;  // To avoid the other animation from being triggered
+
                 Game.Player.Character.HealthFloat = menu.HealthOnOpened;
                 menu.Close();
                 Game.Player.CanControlCharacter = false;
@@ -66,6 +68,7 @@ namespace FoodShops
                 {
                     Script.Yield();
                 }
+
                 Game.Player.CanControlCharacter = true;
                 return;
             }
