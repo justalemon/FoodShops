@@ -101,6 +101,11 @@ namespace FoodShops
             }
 
             Game.Player.CanControlCharacter = true;
+
+            if (FoodShops.current != null && FoodShops.current.Menu == this)
+            {
+                FoodShops.current = null;
+            }
         }
 
         #endregion
