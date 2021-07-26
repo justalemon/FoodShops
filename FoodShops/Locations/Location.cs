@@ -63,24 +63,23 @@ namespace FoodShops.Locations
         /// The camera used when the menu is open.
         /// </summary>
         [JsonIgnore]
-        public Camera Camera { get; private set; }
+        public Camera Camera { get; set; }
         /// <summary>
         /// The Blip used to mark the location of the Food Shop.
         /// </summary>
         [JsonIgnore]
-        public Blip Blip { get; private set; }
+        public Blip Blip { get; set; }
         /// <summary>
         /// The Ped over the counter that speaks with the player.
         /// </summary>
         [JsonIgnore]
-        public Ped Ped { get; private set; }
+        public Ped Ped { get; set; }
 
         /// <summary>
-        /// Initializes the Entities and Camera.
+        /// Recreates the Shop Keeper.
         /// </summary>
-        public void Initialize()
+        public void RecreatePed()
         {
-            // Request the ped and create it
             PedInfo.Model.Request();
             while (!PedInfo.Model.IsLoaded)
             {
@@ -88,25 +87,6 @@ namespace FoodShops.Locations
             }
             Ped = World.CreatePed(PedInfo.Model, PedInfo.Position, PedInfo.Heading);
             PedInfo.Model.MarkAsNoLongerNeeded();
-            // Then, create the blip of the Food Shop
-            Blip = World.CreateBlip(Trigger);
-            Blip.Sprite = BlipSprite.Store;
-            Blip.Color = BlipColor.NetPlayer3;
-            Blip.Name = $"Food Shop: {Name}";
-            Blip.IsShortRange = true;
-            // Finally, create the camera
-            Camera = World.CreateCamera(CameraInfo.Position, Vector3.Zero, CameraInfo.FOV);
-            Function.Call(Hash.POINT_CAM_AT_PED_BONE, Camera, Ped, (int)Bone.SkelHead, 0, 0, 5, true);
-            Ped.Task.LookAt(CameraInfo.Position);
-        }
-        /// <summary>
-        /// Cleans up the entities and camera.
-        /// </summary>
-        public void DoCleanup()
-        {
-            Ped?.Delete();
-            Blip?.Delete();
-            Camera?.Delete();
         }
     }
 }

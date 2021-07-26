@@ -1,4 +1,5 @@
-﻿using GTA.UI;
+﻿using FoodShops.Locations;
+using GTA.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -7,13 +8,13 @@ using System.Collections.Generic;
 namespace FoodShops.Converters
 {
     /// <summary>
-    /// Loads the 
+    /// Loads the list of Shop Menus for a specific Location.
     /// </summary>
     public class ShopMenuConverter : JsonConverter<List<ShopMenu>>
     {
-        private readonly List<ShopMenu> menus;
+        private readonly Dictionary<Guid, ShopMenu> menus;
 
-        public ShopMenuConverter(List<ShopMenu> menus)
+        public ShopMenuConverter(Dictionary<Guid, ShopMenu> menus)
         {
             this.menus = menus;
         }
@@ -25,20 +26,14 @@ namespace FoodShops.Converters
 
             foreach (JToken value in values)
             {
-                bool added = false;
                 Guid guid = Guid.Parse((string)value);
-                foreach (ShopMenu menu in menus)
+                if (menus.ContainsKey(guid))
                 {
-                    if (menu.ID == guid)
-                    {
-                        foundMenus.Add(menu);
-                        added = true;
-                        break;
-                    }
+                    foundMenus.Add(menus[guid]);
                 }
-                if (!added)
+                else
                 {
-                    Notification.Show($"~o~Warning~s~: Menu with the ID {guid} was not found!");
+                    Notification.Show($"~o~Warning~s~: Menu with ID {guid} was not found!");
                 }
             }
 
