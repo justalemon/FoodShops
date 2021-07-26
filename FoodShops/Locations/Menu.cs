@@ -84,7 +84,6 @@ namespace FoodShops.Locations
                     Script.Yield();
                 }
 
-                World.RenderingCamera = null;
                 Game.Player.Character.Task.PlayAnimation("mp_player_inteat@burger", "mp_player_int_eat_burger_fp");
                 while (!Function.Call<bool>(Hash.IS_ENTITY_PLAYING_ANIM, Game.Player.Character, "mp_player_inteat@burger", "mp_player_int_eat_burger_fp", 3))
                 {
