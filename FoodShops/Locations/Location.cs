@@ -85,6 +85,12 @@ namespace FoodShops.Locations
             {
                 Script.Yield();
             }
+
+            if (Ped != null)
+            {
+                Ped.Delete();
+            }
+
             Ped = World.CreatePed(PedInfo.Model, PedInfo.Position, PedInfo.Heading);
             PedInfo.Model.MarkAsNoLongerNeeded();
         }
