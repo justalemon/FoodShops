@@ -180,7 +180,16 @@ namespace FoodShops.Locations
 
             foreach (Location location in locations)
             {
-                if (pos.DistanceTo(location.Trigger) > 50 || location.Ped.IsFleeing || location.Ped.IsDead)
+                if (pos.DistanceTo(location.Trigger) > 50)
+                {
+                    if (location.Ped.IsFleeing || location.Ped.IsDead)
+                    {
+                        location.RecreatePed();
+                    }
+                    continue;
+                }
+
+                if (location.Ped.IsFleeing || location.Ped.IsDead)
                 {
                     continue;
                 }
