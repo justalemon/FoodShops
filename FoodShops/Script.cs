@@ -1,4 +1,5 @@
 ﻿using FoodShops.Converters;
+using FoodShops.Locations;
 using GTA;
 using GTA.Math;
 using GTA.Native;
@@ -23,9 +24,9 @@ namespace FoodShops
         #region Fields
 
         internal static string location = Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath, "FoodShops");
-        internal static ShopLocation current = null;
+        internal static Location current = null;
         private readonly ObjectPool pool = new ObjectPool();
-        private readonly List<ShopLocation> locations = new List<ShopLocation>();
+        private readonly List<Location> locations = new List<Location>();
 
         #endregion
 
@@ -78,10 +79,10 @@ namespace FoodShops
                     }
 
                     string contents = File.ReadAllText(file);
-                    ShopLocation location = null;
+                    Location location = null;
                     try
                     {
-                        location = JsonConvert.DeserializeObject<ShopLocation>(contents, converter);
+                        location = JsonConvert.DeserializeObject<Location>(contents, converter);
                     }
                     catch (JsonSerializationException e)
                     {
@@ -109,7 +110,7 @@ namespace FoodShops
                     {
                         texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTexture);
                     }
-                    PurchaseMenu menu = new PurchaseMenu(location, texture);
+                    Menu menu = new Menu(location, texture);
                     pool.Add(menu);
                     location.Menu = menu;
                     locations.Add(location);
@@ -131,7 +132,7 @@ namespace FoodShops
 
         private void FoodShops_Tick_Init(object sender, EventArgs e)
         {
-            foreach (ShopLocation location in locations)
+            foreach (Location location in locations)
             {
                 location.Initialize();
             }
@@ -161,7 +162,7 @@ namespace FoodShops
             Vector3 pos = Game.Player.Character.Position;
 
             // Iterate over the available interiors
-            foreach (ShopLocation location in locations)
+            foreach (Location location in locations)
             {
                 // If the player is too far from the location or the cashier is trying to flee or is dead, skip it
                 if (pos.DistanceTo(location.Trigger) > 50 || location.Ped.IsFleeing || location.Ped.IsDead)
@@ -196,7 +197,7 @@ namespace FoodShops
             Game.Player.Character.Opacity = 255;
             World.RenderingCamera = null;
 
-            foreach (ShopLocation location in locations)
+            foreach (Location location in locations)
             {
                 location.DoCleanup();
             }

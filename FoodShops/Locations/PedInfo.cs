@@ -3,12 +3,12 @@ using GTA;
 using GTA.Math;
 using Newtonsoft.Json;
 
-namespace FoodShops
+namespace FoodShops.Locations
 {
     /// <summary>
     /// The Spawn information of a Ped.
     /// </summary>
-    public class ShopPed
+    public class PedInfo
     {
         /// <summary>
         /// The position of the ped over the counter.

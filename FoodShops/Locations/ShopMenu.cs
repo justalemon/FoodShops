@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FoodShops
+namespace FoodShops.Locations
 {
     /// <summary>
     /// The Menu items available to purchase on a shop.
@@ -18,6 +18,6 @@ namespace FoodShops
         /// The Meals that are part of this menu.
         /// </summary>
         [JsonProperty("meals", Required = Required.Always)]
-        public List<ShopMeal> Meals { get; set; }
+        public List<Meal> Meals { get; set; }
     }
 }

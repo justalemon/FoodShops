@@ -6,19 +6,19 @@ using LemonUI.Menus;
 using System;
 using System.ComponentModel;
 
-namespace FoodShops
+namespace FoodShops.Locations
 {
     /// <summary>
     /// The menu used to purchase things.
     /// </summary>
-    public class PurchaseMenu : NativeMenu
+    public class Menu : NativeMenu
     {
         #region Properties
 
         /// <summary>
         /// The location of the shop that this menu manages.
         /// </summary>
-        public ShopLocation Location { get; }
+        public Location Location { get; }
         /// <summary>
         /// The number of meals that the player has eaten on this menu.
         /// </summary>
@@ -32,15 +32,15 @@ namespace FoodShops
 
         #region Constructor
 
-        public PurchaseMenu(ShopLocation location, ScaledTexture banner) : base("", location.Name, "", banner)
+        public Menu(Location location, ScaledTexture banner) : base("", location.Name, "", banner)
         {
             Location = location;
             //NoItemsText = "This Shop does not has any food or drinks to be purchased.";
             foreach (ShopMenu menu in location.Menus)
             {
-                foreach (ShopMeal meal in menu.Meals)
+                foreach (Meal meal in menu.Meals)
                 {
-                    Add(new PurchaseItem(meal));
+                    Add(new Item(meal));
                 }
             }
             Shown += PurchaseMenu_Shown;

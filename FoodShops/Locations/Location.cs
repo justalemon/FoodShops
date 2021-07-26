@@ -5,12 +5,12 @@ using GTA.Native;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace FoodShops
+namespace FoodShops.Locations
 {
     /// <summary>
     /// Represents the location of a specific shop.
     /// </summary>
-    public class ShopLocation
+    public class Location
     {
         /// <summary>
         /// The name of this Shop.
@@ -43,12 +43,12 @@ namespace FoodShops
         /// The information of the shop ped.
         /// </summary>
         [JsonProperty("ped", Required = Required.Always)]
-        public ShopPed PedInfo { get; set; }
+        public PedInfo PedInfo { get; set; }
         /// <summary>
         /// The information of the shop camera.
         /// </summary>
         [JsonProperty("camera", Required = Required.Always)]
-        public ShopCamera CameraInfo { get; set; }
+        public CustomCamera CameraInfo { get; set; }
         /// <summary>
         /// The Meal Menus that the player can consume.
         /// </summary>
@@ -58,7 +58,7 @@ namespace FoodShops
         /// <summary>
         /// The menu used at this location.
         /// </summary>
-        public PurchaseMenu Menu { get; internal set; }
+        public Menu Menu { get; internal set; }
         /// <summary>
         /// The camera used when the menu is open.
         /// </summary>

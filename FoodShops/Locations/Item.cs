@@ -5,22 +5,22 @@ using LemonUI.Menus;
 using PlayerCompanion;
 using System;
 
-namespace FoodShops
+namespace FoodShops.Locations
 {
     /// <summary>
     /// The item used to Purchase specific meals.
     /// </summary>
-    public class PurchaseItem : NativeItem
+    public class Item : NativeItem
     {
         #region Fields
 
-        private readonly ShopMeal meal;
+        private readonly Meal meal;
 
         #endregion
 
         #region Constructor
 
-        public PurchaseItem(ShopMeal meal) : base($"{meal.Name} ({meal.Health})", meal.Description ?? "", $"${meal.Price}")
+        public Item(Meal meal) : base($"{meal.Name} ({meal.Health})", meal.Description ?? "", $"${meal.Price}")
         {
             this.meal = meal;
             Activated += PurchaseItem_Activated;
@@ -33,7 +33,7 @@ namespace FoodShops
         private void PurchaseItem_Activated(object sender, EventArgs e)
         {
             // If the sender is not a Purchase Menu
-            if (!(sender is PurchaseMenu menu))
+            if (!(sender is Menu menu))
             {
                 return;
             }
