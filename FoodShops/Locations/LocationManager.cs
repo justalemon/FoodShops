@@ -149,7 +149,7 @@ namespace FoodShops.Locations
         {
             if (Active != null)
             {
-                if (!FoodShops.pool.AreAnyVisible || Active.Ped.IsFleeing || Active.Ped.IsDead)
+                if (!FoodShops.pool.AreAnyVisible || Active.Ped.IsFleeing || Active.Ped.IsDead || Game.Player.WantedLevel > 0)
                 {
                     Active.Menu.Visible = false;
                     Active.Menu.MealsEaten = 0;
@@ -168,6 +168,11 @@ namespace FoodShops.Locations
 
                     Active = null;
                 }
+                return;
+            }
+
+            if (Game.Player.WantedLevel > 0)
+            {
                 return;
             }
 
