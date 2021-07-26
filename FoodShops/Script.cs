@@ -15,7 +15,6 @@ namespace FoodShops
         #region Fields
 
         internal static string location = Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath, "FoodShops");
-        internal static Location current = null;
         internal static readonly ObjectPool pool = new ObjectPool();
 
         #endregion

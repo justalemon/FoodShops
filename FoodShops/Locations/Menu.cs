@@ -95,17 +95,8 @@ namespace FoodShops.Locations
 
                 Location.Ped.PlayAmbientSpeech("GENERIC_BYE");
             }
-            else
-            {
-                World.RenderingCamera = null;
-            }
 
             Game.Player.CanControlCharacter = true;
-
-            if (FoodShops.current != null && FoodShops.current.Menu == this)
-            {
-                FoodShops.current = null;
-            }
         }
 
         #endregion
