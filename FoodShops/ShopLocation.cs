@@ -87,12 +87,6 @@ namespace FoodShops
                 Script.Yield();
             }
             Ped = World.CreatePed(PedInfo.Model, PedInfo.Position, PedInfo.Heading);
-            Ped.IsPositionFrozen = true;
-            Ped.BlockPermanentEvents = true;
-            Ped.CanBeTargetted = false;
-            Ped.CanRagdoll = false;
-            Ped.CanWrithe = false;
-            Ped.IsInvincible = true;
             PedInfo.Model.MarkAsNoLongerNeeded();
             // Then, create the blip of the Food Shop
             Blip = World.CreateBlip(Trigger);

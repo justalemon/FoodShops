@@ -140,8 +140,8 @@ namespace FoodShops
         }
         private void FoodShops_Tick_Run(object sender, EventArgs e)
         {
-            // If the player is wanted, hide the current location and return
-            if (Game.Player.WantedLevel > 0)
+            // If the player is wanted or the cashier is fleeing, hide the current location and return
+            if (Game.Player.WantedLevel > 0 || (current != null && current.Ped.IsFleeing))
             {
                 if (current != null)
                 {
@@ -163,8 +163,8 @@ namespace FoodShops
             // Iterate over the available interiors
             foreach (ShopLocation location in locations)
             {
-                // If the player is too far from the location or is not on the correct interior, skip it
-                if (pos.DistanceTo(location.Trigger) > 50)
+                // If the player is too far from the location or the cashier is trying to flee or is dead, skip it
+                if (pos.DistanceTo(location.Trigger) > 50 || location.Ped.IsFleeing || location.Ped.IsDead)
                 {
                     continue;
                 }
