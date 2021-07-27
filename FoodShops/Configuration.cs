@@ -17,6 +17,11 @@ namespace FoodShops
     public class Configuration
     {
         /// <summary>
+        /// If the blips should be shown on the radar.
+        /// </summary>
+        [JsonProperty("show_blips")]
+        public bool ShowBlips { get; set; } = true;
+        /// <summary>
         /// The maximum amount of meals before the user vomits.
         /// </summary>
         [JsonProperty("max_meals")]

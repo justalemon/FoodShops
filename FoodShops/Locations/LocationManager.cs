@@ -93,11 +93,14 @@ namespace FoodShops.Locations
 
                 location.RecreatePed();
 
-                location.Blip = World.CreateBlip(location.Trigger);
-                location.Blip.Sprite = BlipSprite.Store;
-                location.Blip.Color = BlipColor.NetPlayer3;
-                location.Blip.Name = $"Food Shop: {location.Name}";
-                location.Blip.IsShortRange = true;
+                if (FoodShops.Config.ShowBlips)
+                {
+                    location.Blip = World.CreateBlip(location.Trigger);
+                    location.Blip.Sprite = BlipSprite.Store;
+                    location.Blip.Color = BlipColor.NetPlayer3;
+                    location.Blip.Name = $"Food Shop: {location.Name}";
+                    location.Blip.IsShortRange = true;
+                }
 
                 locations.Add(location);
             }
