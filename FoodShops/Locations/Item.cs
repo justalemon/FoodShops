@@ -47,7 +47,7 @@ namespace FoodShops.Locations
             }
 
             // If the player has reached the meal limit, return and let the manager play the puke animation
-            if (menu.MealsEaten > 5)
+            if (menu.MealsEaten > FoodShops.Config.MaxMeals)
             {
                 menu.MealsEaten += 1;
                 Game.Player.Character.HealthFloat = menu.HealthOnOpened;

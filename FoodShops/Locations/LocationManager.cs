@@ -158,7 +158,7 @@ namespace FoodShops.Locations
                         World.RenderingCamera = null;
                     }
 
-                    if (Active.Menu.MealsEaten > 5)
+                    if (Active.Menu.MealsEaten > FoodShops.Config.MaxMeals)
                     {
                         Active.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
                         Tools.PlayAnimationAndWait("missfam5_blackout", "vomit", AnimationFlags.None);
@@ -185,7 +185,7 @@ namespace FoodShops.Locations
 
                     Active = null;
                 }
-                else if (Active.Menu.MealsEaten > 5)
+                else if (Active.Menu.MealsEaten > FoodShops.Config.MaxMeals)
                 {
                     Active.Menu.Visible = false;
                 }
