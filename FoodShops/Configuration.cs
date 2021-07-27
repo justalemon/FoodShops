@@ -19,12 +19,12 @@ namespace FoodShops
         /// <summary>
         /// The maximum amount of meals before the user vomits.
         /// </summary>
-        [JsonProperty("max_meals", Required = Required.Always)]
+        [JsonProperty("max_meals")]
         public int MaxMeals { get; set; } = 5;
         /// <summary>
         /// What the mod should do when the player eats more food than allowed.
         /// </summary>
-        [JsonProperty("over_eating_behavior", Required = Required.Always)]
+        [JsonProperty("over_eating_behavior")]
         public OverEatingBehavior OverEatingBehavior { get; set; } = OverEatingBehavior.Death;
     }
 }
