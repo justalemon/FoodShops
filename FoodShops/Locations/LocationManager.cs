@@ -160,8 +160,16 @@ namespace FoodShops.Locations
 
                     if (Active.Menu.MealsEaten > FoodShops.Config.MaxMeals)
                     {
-                        Active.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
-                        Tools.PlayAnimationAndWait("missfam5_blackout", "vomit", AnimationFlags.None);
+                        switch (FoodShops.Config.OverEatingBehavior)
+                        {
+                            case OverEatingBehavior.Animation:
+                                Active.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
+                                Tools.PlayAnimationAndWait("missfam5_blackout", "vomit", AnimationFlags.None);
+                                break;
+                            case OverEatingBehavior.Death:
+                                Game.Player.Character.Kill();
+                                break;
+                        }
                     }
                     else if (Active.Menu.MealsEaten > 0)
                     {

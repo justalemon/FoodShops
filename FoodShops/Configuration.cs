@@ -3,6 +3,15 @@
 namespace FoodShops
 {
     /// <summary>
+    /// The behavior when the player over eats.
+    /// </summary>
+    public enum OverEatingBehavior
+    {
+        Animation = 0,
+        Death = 1,
+    }
+
+    /// <summary>
     /// The general configuration of FoodShops.
     /// </summary>
     public class Configuration
@@ -12,5 +21,10 @@ namespace FoodShops
         /// </summary>
         [JsonProperty("max_meals", Required = Required.Always)]
         public int MaxMeals { get; set; } = 5;
+        /// <summary>
+        /// What the mod should do when the player eats more food than allowed.
+        /// </summary>
+        [JsonProperty("over_eating_behavior", Required = Required.Always)]
+        public OverEatingBehavior OverEatingBehavior { get; set; } = OverEatingBehavior.Death;
     }
 }
