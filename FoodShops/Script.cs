@@ -12,10 +12,16 @@ namespace FoodShops
     /// </summary>
     public class FoodShops : Script
     {
-        #region Fields
+        #region Properties
 
-        internal static string location = Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath, "FoodShops");
-        internal static readonly ObjectPool pool = new ObjectPool();
+        /// <summary>
+        /// The directory where the mod data is stored.
+        /// </summary>
+        public static string DataDirectory { get; } = Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath, "FoodShops");
+        /// <summary>
+        /// The LemonUI object pool of this mod.
+        /// </summary>
+        public static ObjectPool Pool { get; } = new ObjectPool();
 
         #endregion
 
@@ -39,7 +45,7 @@ namespace FoodShops
         }
         private void FoodShops_Tick_Run(object sender, EventArgs e)
         {
-            pool.Process();
+            Pool.Process();
             LocationManager.Process();
         }
 

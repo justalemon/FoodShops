@@ -88,7 +88,7 @@ namespace FoodShops.Locations
                     texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTexture);
                 }
                 Menu menu = new Menu(location, texture);
-                FoodShops.pool.Add(menu);
+                FoodShops.Pool.Add(menu);
                 location.Menu = menu;
 
                 location.RecreatePed();
@@ -110,7 +110,7 @@ namespace FoodShops.Locations
         {
             menus.Clear();
 
-            string path = Path.Combine(FoodShops.location, "Menus");
+            string path = Path.Combine(FoodShops.DataDirectory, "Menus");
 
             foreach (string file in Directory.EnumerateFiles(path))
             {
@@ -121,7 +121,7 @@ namespace FoodShops.Locations
         {
             locations.Clear();
 
-            string path = Path.Combine(FoodShops.location, "Locations");
+            string path = Path.Combine(FoodShops.DataDirectory, "Locations");
             ShopMenuConverter converter = new ShopMenuConverter(menus);
 
             foreach (string file in Directory.EnumerateFiles(path))
@@ -149,7 +149,7 @@ namespace FoodShops.Locations
         {
             if (Active != null)
             {
-                if (!FoodShops.pool.AreAnyVisible || Active.Ped.IsFleeing || Active.Ped.IsDead || Game.Player.WantedLevel > 0)
+                if (!FoodShops.Pool.AreAnyVisible || Active.Ped.IsFleeing || Active.Ped.IsDead || Game.Player.WantedLevel > 0)
                 {
                     if (Active.Camera != null)
                     {
