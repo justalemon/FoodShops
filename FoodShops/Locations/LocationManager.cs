@@ -55,7 +55,7 @@ namespace FoodShops.Locations
                     ShopMenu menu = JsonConvert.DeserializeObject<ShopMenu>(contents);
                     menus.Add(menu.ID, menu);
                 }
-                catch (Exception ex)
+                catch (JsonException ex)
                 {
                     Notification.Show($"~o~Warning~s~: Unable to load Menu {Path.GetFileName(path)}:\n{ex.Message}");
                 }
