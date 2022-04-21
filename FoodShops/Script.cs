@@ -36,37 +36,19 @@ namespace FoodShops
         public FoodShops()
         {
             string path = Path.Combine(DataDirectory, "Config.json");
-
-            if (File.Exists(path))
+            try
             {
-                string contents = File.ReadAllText(path);
-
-                Configuration config = null;
-                try
-                {
-                    config = JsonConvert.DeserializeObject<Configuration>(contents);
-                    Config = config;
-                }
-                catch (Exception ex)
-                {
-                    Notification.Show($"~o~Warning~s~: Unable to load the configuration file:\n{ex}");
-                }
+                Config = Configuration.Load(path);
             }
-            else
+            catch (JsonException ex)
             {
-                try
-                {
-                    JsonSerializerSettings settings = new JsonSerializerSettings
-                    {
-                        Formatting = Formatting.Indented
-                    };
-                    string contents = JsonConvert.SerializeObject(Config, settings) + Environment.NewLine;
-                    File.WriteAllText(path, contents);
-                }
-                catch (Exception ex)
-                {
-                    Notification.Show($"~o~Warning~s~: Unable to write the configuration file:\n{ex}");
-                }
+                Notification.Show($"~o~Warning~s~: Unable to load the configuration file:\n{ex.GetType().FullName}: {ex}");
+                throw;
+            }
+            catch (SystemException ex)
+            {
+                Notification.Show($"~o~Warning~s~: Unable to save the configuration file:\n{ex.GetType().FullName}: {ex}");
+                Config = new Configuration();
             }
 
             Tick += FoodShops_Tick_Init;

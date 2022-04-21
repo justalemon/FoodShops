@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace FoodShops
 {
@@ -16,6 +18,8 @@ namespace FoodShops
     /// </summary>
     public class Configuration
     {
+        #region Properties
+        
         /// <summary>
         /// If the blips should be shown on the radar.
         /// </summary>
@@ -31,5 +35,31 @@ namespace FoodShops
         /// </summary>
         [JsonProperty("over_eating_behavior")]
         public OverEatingBehavior OverEatingBehavior { get; set; } = OverEatingBehavior.Death;
+        
+        #endregion
+        
+        #region Functions
+
+        public static Configuration Load(string path)
+        {
+            if (File.Exists(path))
+            {
+                string contents = File.ReadAllText(path);
+                return JsonConvert.DeserializeObject<Configuration>(contents);
+            }
+            else
+            {
+                Configuration config = new Configuration();
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    Formatting = Formatting.Indented
+                };
+                string contents = JsonConvert.SerializeObject(config, settings) + Environment.NewLine;
+                File.WriteAllText(path, contents);
+                return config;
+            }
+        }
+        
+        #endregion
     }
 }
