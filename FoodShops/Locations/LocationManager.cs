@@ -33,36 +33,32 @@ namespace FoodShops.Locations
 
         #endregion
 
-        #region Tool
+        #region Tools
 
-        private static void PopulateSpecificMenu(string path)
-        {
-            if (Path.GetExtension(path).ToLowerInvariant() != ".json")
-            {
-                Notification.Show($"~o~Warning~s~: Non JSON file found in the Menus Directory! ({Path.GetFileName(path)})");
-                return;
-            }
-
-            try
-            {
-                string contents = File.ReadAllText(path);
-                ShopMenu @new = JsonConvert.DeserializeObject<ShopMenu>(contents);
-                menus.Add(@new.ID, @new);
-            }
-            catch (Exception ex)
-            {
-                Notification.Show($"~o~Warning~s~: Unable to load Menu {Path.GetFileName(path)}:\n{ex.Message}");
-            }
-        }
         private static void PopulateMenus()
         {
             menus.Clear();
 
-            string path = Path.Combine(FoodShops.DataDirectory, "Menus");
+            string directory = Path.Combine(FoodShops.DataDirectory, "Menus");
 
-            foreach (string file in Directory.EnumerateFiles(path))
+            foreach (string path in Directory.EnumerateFiles(directory))
             {
-                PopulateSpecificMenu(file);
+                if (Path.GetExtension(path).ToLowerInvariant() != ".json")
+                {
+                    Notification.Show($"~o~Warning~s~: Non JSON file found in the Menus Directory! ({Path.GetFileName(path)})");
+                    continue;
+                }
+
+                try
+                {
+                    string contents = File.ReadAllText(path);
+                    ShopMenu menu = JsonConvert.DeserializeObject<ShopMenu>(contents);
+                    menus.Add(menu.ID, menu);
+                }
+                catch (Exception ex)
+                {
+                    Notification.Show($"~o~Warning~s~: Unable to load Menu {Path.GetFileName(path)}:\n{ex.Message}");
+                }
             }
         }
         private static void PopulateLocations()
