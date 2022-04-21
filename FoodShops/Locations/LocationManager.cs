@@ -54,61 +54,6 @@ namespace FoodShops.Locations
                 Notification.Show($"~o~Warning~s~: Unable to load Menu {Path.GetFileName(path)}:\n{ex.Message}");
             }
         }
-        private static void PopulateSpecificLocation(string path, params JsonConverter[] converters)
-        {
-            if (Path.GetExtension(path).ToLowerInvariant() != ".json")
-            {
-                Notification.Show($"~o~Warning~s~: Non JSON file found in the Locations Directory! ({Path.GetFileName(path)})");
-                return;
-            }
-
-            try
-            {
-                string contents = File.ReadAllText(path);
-                Location location = JsonConvert.DeserializeObject<Location>(contents, converters);
-
-                if (location.Interior.HasValue)
-                {
-                    if (Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, location.Interior.Value.X, location.Interior.Value.Y, location.Interior.Value.Z) == 0)
-                    {
-                        Notification.Show($"~o~Warning~s~: Interior of {location.Name} is not available! Maybe you forgot to install it?");
-                        return;
-                    }
-                }
-
-                if (!location.PedInfo.Model.IsPed)
-                {
-                    Notification.Show($"~o~Warning~s~: Model {location.PedInfo.Model} for Location {location.Name} is not a Ped!");
-                    return;
-                }
-
-                ScaledTexture texture = null;
-                if (!string.IsNullOrWhiteSpace(location.BannerTXD) && !string.IsNullOrWhiteSpace(location.BannerTexture))
-                {
-                    texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTexture);
-                }
-                Menu menu = new Menu(location, texture);
-                FoodShops.Pool.Add(menu);
-                location.Menu = menu;
-
-                location.RecreatePed();
-
-                if (FoodShops.Config.ShowBlips)
-                {
-                    location.Blip = World.CreateBlip(location.Trigger);
-                    location.Blip.Sprite = BlipSprite.Store;
-                    location.Blip.Color = BlipColor.NetPlayer3;
-                    location.Blip.Name = $"Food Shop: {location.Name}";
-                    location.Blip.IsShortRange = true;
-                }
-
-                locations.Add(location);
-            }
-            catch (Exception ex)
-            {
-                Notification.Show($"~o~Warning~s~: Unable to load Location {Path.GetFileName(path)}:\n{ex.Message}");
-            }
-        }
         private static void PopulateMenus()
         {
             menus.Clear();
@@ -124,12 +69,33 @@ namespace FoodShops.Locations
         {
             locations.Clear();
 
-            string path = Path.Combine(FoodShops.DataDirectory, "Locations");
             ShopMenuConverter converter = new ShopMenuConverter(menus);
 
-            foreach (string file in Directory.EnumerateFiles(path))
+            foreach (string path in Directory.EnumerateFiles(Path.Combine(FoodShops.DataDirectory, "Locations")))
             {
-                PopulateSpecificLocation(file, converter);
+                if (Path.GetExtension(path).ToLowerInvariant() != ".json")
+                {
+                    Notification.Show($"~o~Warning~s~: Non JSON file found in the Locations Directory! ({Path.GetFileName(path)})");
+                    return;
+                }
+
+                try
+                {
+                    Location location = Location.Load(path, converter);
+                    locations.Add(location);
+                }
+                catch (InteriorNotFoundException ex)
+                {
+                    Notification.Show($"~o~Warning~s~: Interior of {ex.Location.Name} is not available! Maybe you forgot to install it?");
+                }
+                catch (InvalidPedException ex)
+                {
+                    Notification.Show($"~o~Warning~s~: Model {ex.Location.PedInfo.Model} for Location {ex.Location.Name} is not a Ped!");
+                }
+                catch (Exception ex)
+                {
+                    Notification.Show($"~o~Warning~s~: Unable to load Location {Path.GetFileName(path)}:\n{ex.Message}");
+                }
             }
         }
 

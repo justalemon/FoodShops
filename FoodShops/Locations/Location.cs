@@ -4,6 +4,9 @@ using GTA.Math;
 using GTA.Native;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using LemonUI.Elements;
 
 namespace FoodShops.Locations
 {
@@ -12,6 +15,8 @@ namespace FoodShops.Locations
     /// </summary>
     public class Location
     {
+        #region Properties
+        
         /// <summary>
         /// The name of this Shop.
         /// </summary>
@@ -74,6 +79,10 @@ namespace FoodShops.Locations
         /// </summary>
         [JsonIgnore]
         public Ped Ped { get; set; }
+        
+        #endregion
+        
+        #region Functions
 
         /// <summary>
         /// Recreates the Shop Keeper.
@@ -94,5 +103,55 @@ namespace FoodShops.Locations
             Ped = World.CreatePed(PedInfo.Model, PedInfo.Position, PedInfo.Heading);
             PedInfo.Model.MarkAsNoLongerNeeded();
         }
+        /// <summary>
+        /// Loads a location.
+        /// </summary>
+        /// <param name="path">The file to load.</param>
+        /// <param name="converters">The converters to use.</param>
+        /// <returns>The location loaded</returns>
+        /// <exception cref="InteriorNotFoundException">The interior required does not exists.</exception>
+        /// <exception cref="InvalidPedException">The shop keeper is not a valid ped.</exception>
+        public static Location Load(string path, params JsonConverter[] converters)
+        {
+            string contents = File.ReadAllText(path);
+            Location location = JsonConvert.DeserializeObject<Location>(contents, converters);
+
+            if (location.Interior.HasValue)
+            {
+                if (Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, location.Interior.Value.X, location.Interior.Value.Y, location.Interior.Value.Z) == 0)
+                {
+                    throw new InteriorNotFoundException(location);
+                }
+            }
+
+            if (!location.PedInfo.Model.IsPed)
+            {
+                throw new InvalidPedException(location);
+            }
+
+            ScaledTexture texture = null;
+            if (!string.IsNullOrWhiteSpace(location.BannerTXD) && !string.IsNullOrWhiteSpace(location.BannerTexture))
+            {
+                texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTexture);
+            }
+            Menu menu = new Menu(location, texture);
+            FoodShops.Pool.Add(menu);
+            location.Menu = menu;
+
+            location.RecreatePed();
+
+            if (FoodShops.Config.ShowBlips)
+            {
+                location.Blip = World.CreateBlip(location.Trigger);
+                location.Blip.Sprite = BlipSprite.Store;
+                location.Blip.Color = BlipColor.NetPlayer3;
+                location.Blip.Name = $"Food Shop: {location.Name}";
+                location.Blip.IsShortRange = true;
+            }
+
+            return location;
+        }
+        
+        #endregion
     }
 }
