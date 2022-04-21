@@ -42,12 +42,12 @@ namespace FoodShops
             }
             catch (JsonException ex)
             {
-                Notification.Show($"~o~Warning~s~: Unable to load the configuration file:\n{ex.GetType().FullName}: {ex}");
+                Notification.Show($"~o~Warning~s~: Unable to load the configuration file:\n{ex.GetType()}: {ex}");
                 throw;
             }
             catch (SystemException ex)
             {
-                Notification.Show($"~o~Warning~s~: Unable to save the configuration file:\n{ex.GetType().FullName}: {ex}");
+                Notification.Show($"~o~Warning~s~: Unable to save the configuration file:\n{ex.GetType()}: {ex}");
                 Config = new Configuration();
             }
 
