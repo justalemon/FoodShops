@@ -150,8 +150,6 @@ namespace FoodShops.Locations
                         Active.Ped.PlayAmbientSpeech("GENERIC_BYE");
                     }
 
-                    Screen.ShowSubtitle("Done");
-
                     Game.Player.CanControlCharacter = true;
                     Active.Menu.MealsEaten = 0;
 
