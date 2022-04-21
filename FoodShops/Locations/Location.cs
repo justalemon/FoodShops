@@ -101,6 +101,7 @@ namespace FoodShops.Locations
             }
 
             Ped = World.CreatePed(PedInfo.Model, PedInfo.Position, PedInfo.Heading);
+            Ped.IsPositionFrozen = true;
             PedInfo.Model.MarkAsNoLongerNeeded();
         }
         /// <summary>

@@ -185,7 +185,12 @@ namespace FoodShops.Locations
                     continue;
                 }
 
-                if (location.Ped.IsFleeing || location.Ped.IsDead)
+                if (location.Ped.IsPositionFrozen && Function.Call<bool>(Hash.HAS_COLLISION_LOADED_AROUND_ENTITY, location.Ped))
+                {
+                    location.Ped.IsPositionFrozen = false;
+                }
+
+                if (location.Ped.IsPositionFrozen || location.Ped.IsFleeing || location.Ped.IsDead)
                 {
                     continue;
                 }
