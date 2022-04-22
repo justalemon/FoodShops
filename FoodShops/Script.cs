@@ -150,55 +150,11 @@ namespace FoodShops
 
             if (Active != null)
             {
-                if (!Pool.AreAnyVisible || Active.Ped.IsFleeing || Active.Ped.IsDead ||
-                    Game.Player.WantedLevel > 0)
+                if (Pool.AreAnyVisible && (Active.Ped.IsFleeing || Active.Ped.IsDead || Game.Player.WantedLevel > 0))
                 {
-                    if (Active.Camera != null)
-                    {
-                        Active.Camera.Delete();
-                        Active.Camera = null;
-                        World.RenderingCamera = null;
-                    }
-
-                    if (Active.Menu.MealsEaten > Config.MaxMeals)
-                    {
-                        switch (Config.OverEatingBehavior)
-                        {
-                            case OverEatingBehavior.Animation:
-                                Active.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
-                                Tools.PlayAnimationAndWait("missfam5_blackout", "vomit", AnimationFlags.None);
-                                break;
-                            case OverEatingBehavior.Death:
-                                Game.Player.Character.Kill();
-                                break;
-                        }
-                    }
-                    else if (Active.Menu.MealsEaten > 0)
-                    {
-                        Tools.PlayAnimationAndWait("mp_player_inteat@burger", "mp_player_int_eat_burger_fp", AnimationFlags.UpperBodyOnly);
-                        Active.Ped.PlayAmbientSpeech("GENERIC_BYE");
-                    }
-                    else
-                    {
-                        Active.Ped.PlayAmbientSpeech("GENERIC_BYE");
-                    }
-
-                    Game.Player.CanControlCharacter = true;
-                    Active.Menu.MealsEaten = 0;
-
-                    if (Active.Menu.Items.Count > 0)
-                    {
-                        Active.Menu.SelectedIndex = 0;
-                    }
-
-                    Active = null;
+                    Pool.HideAll();
+                    return;
                 }
-                else if (Active.Menu.MealsEaten > Config.MaxMeals)
-                {
-                    Active.Menu.Visible = false;
-                }
-
-                return;
             }
 
             Vector3 pos = Game.Player.Character.Position;
@@ -235,16 +191,7 @@ namespace FoodShops
                 
                 if (Game.IsControlJustPressed(Control.Context))
                 {
-                    Game.Player.CanControlCharacter = false;
-                    Game.Player.Character.Opacity = 0;
-
                     location.Menu.Visible = true;
-
-                    location.Camera = World.CreateCamera(location.CameraInfo.Position, Vector3.Zero, location.CameraInfo.FOV);
-                    Function.Call(Hash.POINT_CAM_AT_PED_BONE, location.Camera, location.Ped, (int)Bone.SkelHead, 0, 0, 5, true);
-                    location.Ped.Task.LookAt(location.CameraInfo.Position);
-                    World.RenderingCamera = location.Camera;
-
                     Active = location;
                     return;
                 }
