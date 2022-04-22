@@ -64,7 +64,7 @@ namespace FoodShops
                 Config = new Configuration();
             }
 
-            Tick += FoodShops_Tick_Init;
+            Tick += FoodShops_Init;
             Aborted += FoodShops_Aborted;
         }
 
@@ -136,14 +136,14 @@ namespace FoodShops
 
         #region Events
 
-        private void FoodShops_Tick_Init(object sender, EventArgs e)
+        private void FoodShops_Init(object sender, EventArgs e)
         {
             PopulateMenus();
             PopulateShops();
-            Tick -= FoodShops_Tick_Init;
-            Tick += FoodShops_Tick_Run;
+            Tick -= FoodShops_Init;
+            Tick += FoodShops_Tick;
         }
-        private void FoodShops_Tick_Run(object sender, EventArgs e)
+        private void FoodShops_Tick(object sender, EventArgs e)
         {
             Pool.Process();
 
