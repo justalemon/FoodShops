@@ -8,7 +8,7 @@ using System.Drawing;
 using System.IO;
 using LemonUI.Elements;
 
-namespace FoodShops.Locations
+namespace FoodShops
 {
     /// <summary>
     /// Represents the location of a specific shop.

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FoodShops.Locations
+namespace FoodShops
 {
     /// <summary>
     /// The Menu items available to purchase on a shop.

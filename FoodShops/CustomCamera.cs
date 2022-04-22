@@ -2,7 +2,7 @@
 using GTA.Math;
 using Newtonsoft.Json;
 
-namespace FoodShops.Locations
+namespace FoodShops
 {
     /// <summary>
     /// Represents the location of a camera.

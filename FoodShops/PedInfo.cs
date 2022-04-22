@@ -3,7 +3,7 @@ using GTA;
 using GTA.Math;
 using Newtonsoft.Json;
 
-namespace FoodShops.Locations
+namespace FoodShops
 {
     /// <summary>
     /// The Spawn information of a Ped.

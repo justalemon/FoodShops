@@ -8,7 +8,7 @@ using System.ComponentModel;
 using GTA.UI;
 using PlayerCompanion;
 
-namespace FoodShops.Locations
+namespace FoodShops
 {
     /// <summary>
     /// The menu used to purchase things.

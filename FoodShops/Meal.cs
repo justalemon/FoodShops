@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel;
 
-namespace FoodShops.Locations
+namespace FoodShops
 {
     /// <summary>
     /// A Meal that can be purchased in a shop.
