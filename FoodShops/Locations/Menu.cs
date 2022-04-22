@@ -58,6 +58,28 @@ namespace FoodShops.Locations
         }
 
         #endregion
+        
+        #region Tools
+        
+        private static void PlayAnimationAndWait(string animDict, string animName, AnimationFlags animFlags)
+        {
+            Ped ped = Game.Player.Character;
+
+            Function.Call(Hash.REQUEST_ANIM_DICT, animDict);
+            while (!Function.Call<bool>(Hash.HAS_ANIM_DICT_LOADED, animDict))
+            {
+                Script.Yield();
+            }
+
+            Game.Player.Character.Task.PlayAnimation(animDict, animName, 8f, -8f, -1, animFlags, 0f);
+
+            while (Function.Call<float>(Hash.GET_ENTITY_ANIM_CURRENT_TIME, ped, animDict, animName) < 0.9f)
+            {
+                Script.Yield();
+            }
+        }
+        
+        #endregion
 
         #region Events
 
@@ -106,7 +128,7 @@ namespace FoodShops.Locations
                 {
                     case OverEatingBehavior.Animation:
                         Location.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
-                        Tools.PlayAnimationAndWait("missfam5_blackout", "vomit", AnimationFlags.None);
+                        PlayAnimationAndWait("missfam5_blackout", "vomit", AnimationFlags.None);
                         break;
                     case OverEatingBehavior.Death:
                         Game.Player.Character.Kill();
