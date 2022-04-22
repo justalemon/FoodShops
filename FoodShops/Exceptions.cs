@@ -11,11 +11,11 @@ namespace FoodShops
         /// <summary>
         /// The location that caused the exception.
         /// </summary>
-        public Location Location { get; }
+        public Shop Shop { get; }
 
-        public InteriorNotFoundException(Location location)
+        public InteriorNotFoundException(Shop shop)
         {
-            Location = location;
+            Shop = shop;
         }
     }
 
@@ -27,11 +27,11 @@ namespace FoodShops
         /// <summary>
         /// The location that caused the exception.
         /// </summary>
-        public Location Location { get; }
+        public Shop Shop { get; }
         
-        public InvalidPedException(Location location)
+        public InvalidPedException(Shop shop)
         {
-            Location = location;
+            Shop = shop;
         }
     }
 }

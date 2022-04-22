@@ -13,7 +13,7 @@ namespace FoodShops.Locations
     /// <summary>
     /// Represents the location of a specific shop.
     /// </summary>
-    public class Location
+    public class Shop
     {
         #region Properties
         
@@ -105,52 +105,52 @@ namespace FoodShops.Locations
             PedInfo.Model.MarkAsNoLongerNeeded();
         }
         /// <summary>
-        /// Loads a location.
+        /// Loads a specific shop.
         /// </summary>
         /// <param name="path">The file to load.</param>
         /// <param name="converters">The converters to use.</param>
         /// <returns>The location loaded</returns>
         /// <exception cref="InteriorNotFoundException">The interior required does not exists.</exception>
         /// <exception cref="InvalidPedException">The shop keeper is not a valid ped.</exception>
-        public static Location Load(string path, params JsonConverter[] converters)
+        public static Shop Load(string path, params JsonConverter[] converters)
         {
             string contents = File.ReadAllText(path);
-            Location location = JsonConvert.DeserializeObject<Location>(contents, converters);
+            Shop shop = JsonConvert.DeserializeObject<Shop>(contents, converters);
 
-            if (location.Interior.HasValue)
+            if (shop.Interior.HasValue)
             {
-                if (Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, location.Interior.Value.X, location.Interior.Value.Y, location.Interior.Value.Z) == 0)
+                if (Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, shop.Interior.Value.X, shop.Interior.Value.Y, shop.Interior.Value.Z) == 0)
                 {
-                    throw new InteriorNotFoundException(location);
+                    throw new InteriorNotFoundException(shop);
                 }
             }
 
-            if (!location.PedInfo.Model.IsPed)
+            if (!shop.PedInfo.Model.IsPed)
             {
-                throw new InvalidPedException(location);
+                throw new InvalidPedException(shop);
             }
 
             ScaledTexture texture = null;
-            if (!string.IsNullOrWhiteSpace(location.BannerTXD) && !string.IsNullOrWhiteSpace(location.BannerTexture))
+            if (!string.IsNullOrWhiteSpace(shop.BannerTXD) && !string.IsNullOrWhiteSpace(shop.BannerTexture))
             {
-                texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), location.BannerTXD, location.BannerTexture);
+                texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), shop.BannerTXD, shop.BannerTexture);
             }
-            Menu menu = new Menu(location, texture);
+            Menu menu = new Menu(shop, texture);
             FoodShops.Pool.Add(menu);
-            location.Menu = menu;
+            shop.Menu = menu;
 
-            location.RecreatePed();
+            shop.RecreatePed();
 
             if (FoodShops.Config.ShowBlips)
             {
-                location.Blip = World.CreateBlip(location.Trigger);
-                location.Blip.Sprite = BlipSprite.Store;
-                location.Blip.Color = BlipColor.NetPlayer3;
-                location.Blip.Name = $"Food Shop: {location.Name}";
-                location.Blip.IsShortRange = true;
+                shop.Blip = World.CreateBlip(shop.Trigger);
+                shop.Blip.Sprite = BlipSprite.Store;
+                shop.Blip.Color = BlipColor.NetPlayer3;
+                shop.Blip.Name = $"Food Shop: {shop.Name}";
+                shop.Blip.IsShortRange = true;
             }
 
-            return location;
+            return shop;
         }
         
         #endregion

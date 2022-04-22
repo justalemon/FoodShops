@@ -20,7 +20,7 @@ namespace FoodShops.Locations
         /// <summary>
         /// The location of the shop that this menu manages.
         /// </summary>
-        public Location Location { get; }
+        public Shop Shop { get; }
         /// <summary>
         /// The number of meals that the player has eaten on this menu.
         /// </summary>
@@ -34,11 +34,11 @@ namespace FoodShops.Locations
 
         #region Constructor
 
-        public Menu(Location location, ScaledTexture banner) : base("", location.Name, "", banner)
+        public Menu(Shop shop, ScaledTexture banner) : base("", shop.Name, "", banner)
         {
-            Location = location;
+            Shop = shop;
             //NoItemsText = "This Shop does not has any food or drinks to be purchased.";
-            foreach (ShopMenu menu in location.Menus)
+            foreach (ShopMenu menu in shop.Menus)
             {
                 foreach (Meal meal in menu.Meals)
                 {
@@ -88,14 +88,14 @@ namespace FoodShops.Locations
             Game.Player.CanControlCharacter = false;
             Game.Player.Character.Opacity = 0;
             
-            Location.Camera = World.CreateCamera(Location.CameraInfo.Position, Vector3.Zero, Location.CameraInfo.FOV);
-            Function.Call(Hash.POINT_CAM_AT_PED_BONE, Location.Camera, Location.Ped, (int)Bone.SkelHead, 0, 0, 5, true);
-            Location.Ped.Task.LookAt(Location.CameraInfo.Position);
-            World.RenderingCamera = Location.Camera;
+            Shop.Camera = World.CreateCamera(Shop.CameraInfo.Position, Vector3.Zero, Shop.CameraInfo.FOV);
+            Function.Call(Hash.POINT_CAM_AT_PED_BONE, Shop.Camera, Shop.Ped, (int)Bone.SkelHead, 0, 0, 5, true);
+            Shop.Ped.Task.LookAt(Shop.CameraInfo.Position);
+            World.RenderingCamera = Shop.Camera;
         }
         private void PurchaseMenu_Shown(object sender, EventArgs e)
         {
-            Location.Ped.PlayAmbientSpeech("GENERIC_HI");
+            Shop.Ped.PlayAmbientSpeech("GENERIC_HI");
             MealsEaten = 0;
         }
         private void PurchaseMenu_ItemActivated(object sender, ItemActivatedArgs e)
@@ -107,7 +107,7 @@ namespace FoodShops.Locations
             
             if (Companion.Wallet.Money < meal.Price)
             {
-                Location.Ped.PlayAmbientSpeech("GENERIC_CURSE_MED");
+                Shop.Ped.PlayAmbientSpeech("GENERIC_CURSE_MED");
                 Notification.Show("You don't have enough money to buy this!");
                 return;
             }
@@ -127,7 +127,7 @@ namespace FoodShops.Locations
                 switch (FoodShops.Config.OverEatingBehavior)
                 {
                     case OverEatingBehavior.Animation:
-                        Location.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
+                        Shop.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
                         PlayAnimationAndWait("missfam5_blackout", "vomit", AnimationFlags.None);
                         break;
                     case OverEatingBehavior.Death:
@@ -139,32 +139,32 @@ namespace FoodShops.Locations
             }
             else
             {
-                Location.Ped.PlayAmbientSpeech("GENERIC_THANKS");
+                Shop.Ped.PlayAmbientSpeech("GENERIC_THANKS");
             }
         }
         private void PurchaseMenu_Closing(object sender, CancelEventArgs e)
         {
             Vector3 pos = Game.Player.Character.Position;
-            Game.Player.Character.PositionNoOffset = new Vector3(Location.Trigger.X, Location.Trigger.Y, pos.Z);
+            Game.Player.Character.PositionNoOffset = new Vector3(Shop.Trigger.X, Shop.Trigger.Y, pos.Z);
             Game.Player.CanControlCharacter = true;
         }
         private void PurchaseMenu_Closed(object sender, EventArgs e)
         {
-            if (Location.Camera != null)
+            if (Shop.Camera != null)
             {
-                Location.Camera.Delete();
-                Location.Camera = null;
+                Shop.Camera.Delete();
+                Shop.Camera = null;
                 World.RenderingCamera = null;
             }
 
-            if (Location.Ped.IsAlive && Game.Player.WantedLevel > 0)
+            if (Shop.Ped.IsAlive && Game.Player.WantedLevel > 0)
             {
-                Location.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
+                Shop.Ped.PlayAmbientSpeech("GENERIC_SHOCKED_MED");
             }
             
             HealthOnOpened = -1;
             Game.Player.Character.Opacity = 255;
-            Location.Ped?.Task.ClearLookAt();
+            Shop.Ped?.Task.ClearLookAt();
         }
 
         #endregion

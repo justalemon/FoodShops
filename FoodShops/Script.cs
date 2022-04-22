@@ -23,7 +23,7 @@ namespace FoodShops
         #region Fields
 
         private static readonly string dataDirectory = Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath, "FoodShops");
-        private static readonly List<Location> locations = new List<Location>();
+        private static readonly List<Shop> shops = new List<Shop>();
         private static readonly Dictionary<Guid, ShopMenu> menus = new Dictionary<Guid, ShopMenu>();
         
         #endregion
@@ -39,9 +39,9 @@ namespace FoodShops
         /// </summary>
         public static Configuration Config { get; private set; } = new Configuration();
         /// <summary>
-        /// The currently active location.
+        /// The currently active shop.
         /// </summary>
-        public static Location Active { get; private set; }
+        public static Shop Active { get; private set; }
 
         #endregion
 
@@ -99,9 +99,9 @@ namespace FoodShops
                 }
             }
         }
-        private static void PopulateLocations()
+        private static void PopulateShops()
         {
-            locations.Clear();
+            shops.Clear();
 
             ShopMenuConverter converter = new ShopMenuConverter(menus);
 
@@ -109,26 +109,26 @@ namespace FoodShops
             {
                 if (Path.GetExtension(path).ToLowerInvariant() != ".json")
                 {
-                    Notification.Show($"~o~Warning~s~: Non JSON file found in the Locations Directory! ({Path.GetFileName(path)})");
+                    Notification.Show($"~o~Warning~s~: Non JSON file found in the Shops Directory! ({Path.GetFileName(path)})");
                     return;
                 }
 
                 try
                 {
-                    Location location = Location.Load(path, converter);
-                    locations.Add(location);
+                    Shop shop = Shop.Load(path, converter);
+                    shops.Add(shop);
                 }
                 catch (InteriorNotFoundException ex)
                 {
-                    Notification.Show($"~o~Warning~s~: Interior of {ex.Location.Name} is not available! Maybe you forgot to install it?");
+                    Notification.Show($"~o~Warning~s~: Interior of {ex.Shop.Name} is not available! Maybe you forgot to install it?");
                 }
                 catch (InvalidPedException ex)
                 {
-                    Notification.Show($"~o~Warning~s~: Model {ex.Location.PedInfo.Model} for Location {ex.Location.Name} is not a Ped!");
+                    Notification.Show($"~o~Warning~s~: Model {ex.Shop.PedInfo.Model} for Shop {ex.Shop.Name} is not a Ped!");
                 }
                 catch (Exception ex)
                 {
-                    Notification.Show($"~o~Warning~s~: Unable to load Location {Path.GetFileName(path)}:\n{ex.Message}");
+                    Notification.Show($"~o~Warning~s~: Unable to load Shop {Path.GetFileName(path)}:\n{ex.Message}");
                 }
             }
         }
@@ -140,7 +140,7 @@ namespace FoodShops
         private void FoodShops_Tick_Init(object sender, EventArgs e)
         {
             PopulateMenus();
-            PopulateLocations();
+            PopulateShops();
             Tick -= FoodShops_Tick_Init;
             Tick += FoodShops_Tick_Run;
         }
@@ -159,30 +159,30 @@ namespace FoodShops
 
             Vector3 pos = Game.Player.Character.Position;
 
-            foreach (Location location in locations)
+            foreach (Shop shop in shops)
             {
-                if (pos.DistanceTo(location.Trigger) > 50)
+                if (pos.DistanceTo(shop.Trigger) > 50)
                 {
-                    if (location.Ped.IsFleeing || location.Ped.IsDead)
+                    if (shop.Ped.IsFleeing || shop.Ped.IsDead)
                     {
-                        location.RecreatePed();
+                        shop.RecreatePed();
                     }
                     continue;
                 }
 
-                if (location.Ped.IsPositionFrozen && Function.Call<bool>(Hash.HAS_COLLISION_LOADED_AROUND_ENTITY, location.Ped))
+                if (shop.Ped.IsPositionFrozen && Function.Call<bool>(Hash.HAS_COLLISION_LOADED_AROUND_ENTITY, shop.Ped))
                 {
-                    location.Ped.IsPositionFrozen = false;
+                    shop.Ped.IsPositionFrozen = false;
                 }
                 
-                if (location.Ped.IsPositionFrozen || location.Ped.IsFleeing || location.Ped.IsDead)
+                if (shop.Ped.IsPositionFrozen || shop.Ped.IsFleeing || shop.Ped.IsDead)
                 {
                     continue;
                 }
                 
-                World.DrawMarker(MarkerType.VerticalCylinder, location.Trigger, Vector3.Zero, Vector3.Zero, new Vector3(0.5f, 0.5f, 0.5f), Color.Red);
+                World.DrawMarker(MarkerType.VerticalCylinder, shop.Trigger, Vector3.Zero, Vector3.Zero, new Vector3(0.5f, 0.5f, 0.5f), Color.Red);
 
-                if (pos.DistanceTo(location.Trigger) > 1.25f)
+                if (pos.DistanceTo(shop.Trigger) > 1.25f)
                 {
                     continue;
                 }
@@ -191,8 +191,8 @@ namespace FoodShops
                 
                 if (Game.IsControlJustPressed(Control.Context))
                 {
-                    location.Menu.Visible = true;
-                    Active = location;
+                    shop.Menu.Visible = true;
+                    Active = shop;
                     return;
                 }
             }
@@ -207,11 +207,11 @@ namespace FoodShops
                 World.RenderingCamera = null;
             }
 
-            foreach (Location location in locations)
+            foreach (Shop shop in shops)
             {
-                location.Ped?.Delete();
-                location.Blip?.Delete();
-                location.Camera?.Delete();
+                shop.Ped?.Delete();
+                shop.Blip?.Delete();
+                shop.Camera?.Delete();
             }
         }
 
