@@ -42,7 +42,11 @@ namespace FoodShops.Locations
             {
                 foreach (Meal meal in menu.Meals)
                 {
-                    Add(new Item(meal));
+                    NativeItem item = new NativeItem($"{meal.Name} ({meal.Health})", meal.Description ?? "", $"${meal.Price}")
+                    {
+                        Tag = meal
+                    };
+                    Add(item);
                 }
             }
 
@@ -74,20 +78,20 @@ namespace FoodShops.Locations
         }
         private void PurchaseMenu_ItemActivated(object sender, ItemActivatedArgs e)
         {
-            if (!(e.Item is Item item))
+            if (!(e.Item.Tag is Meal meal))
             {
                 return;
             }
             
-            if (Companion.Wallet.Money < item.Meal.Price)
+            if (Companion.Wallet.Money < meal.Price)
             {
                 Location.Ped.PlayAmbientSpeech("GENERIC_CURSE_MED");
                 Notification.Show("You don't have enough money to buy this!");
                 return;
             }
             
-            Companion.Wallet.Money -= item.Meal.Price;
-            float health = Game.Player.Character.HealthFloat + item.Meal.Health;
+            Companion.Wallet.Money -= meal.Price;
+            float health = Game.Player.Character.HealthFloat + meal.Health;
             float maxHealth = Game.Player.Character.MaxHealthFloat;
             if (health > maxHealth)
             {
