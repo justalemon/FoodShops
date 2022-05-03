@@ -169,30 +169,40 @@ namespace FoodShops
                     continue;
                 }
 
-                if (shop.Ped.IsPositionFrozen && Function.Call<bool>(Hash.HAS_COLLISION_LOADED_AROUND_ENTITY, shop.Ped))
+                if (shop.Interior.HasValue && shop.Ped.IsPositionFrozen)
                 {
-                    shop.Ped.IsPositionFrozen = false;
+                    int id = Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, shop.Interior.Value.X, shop.Interior.Value.Y, shop.Interior.Value.Z);
+                    bool ready = Function.Call<bool>(Hash.IS_INTERIOR_READY, id);
+
+                    if (Function.Call<bool>(Hash.HAS_COLLISION_LOADED_AROUND_ENTITY, shop.Ped) && ready)
+                    {
+                        shop.Ped.IsPositionFrozen = false;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
-                
+
                 if (shop.Ped.IsPositionFrozen || shop.Ped.IsFleeing || shop.Ped.IsDead)
                 {
                     continue;
                 }
-                
+
                 World.DrawMarker(MarkerType.VerticalCylinder, shop.Trigger, Vector3.Zero, Vector3.Zero, new Vector3(0.5f, 0.5f, 0.5f), Color.Red);
 
                 if (pos.DistanceTo(shop.Trigger) > 1.25f)
                 {
                     continue;
                 }
-                
+
                 Screen.ShowHelpTextThisFrame("Press ~INPUT_CONTEXT~ to buy some food.");
                 
                 if (Game.IsControlJustPressed(Control.Context))
                 {
                     shop.Menu.Visible = true;
                     Active = shop;
-                    return;
+                    break;
                 }
             }
         }

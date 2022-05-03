@@ -119,10 +119,17 @@ namespace FoodShops
 
             if (shop.Interior.HasValue)
             {
-                if (Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, shop.Interior.Value.X, shop.Interior.Value.Y, shop.Interior.Value.Z) == 0)
+                int interior = Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, shop.Interior.Value.X, shop.Interior.Value.Y, shop.Interior.Value.Z);
+                
+                if (interior == 0)
                 {
                     throw new InteriorNotFoundException(shop);
                 }
+
+                Function.Call(Hash.PIN_INTERIOR_IN_MEMORY, interior);
+                Function.Call(Hash.DISABLE_INTERIOR, interior, false);
+                Function.Call(Hash.CAP_INTERIOR, interior, false);
+                Function.Call(Hash.SET_INTERIOR_ACTIVE, interior, true);
             }
 
             if (!shop.PedInfo.Model.IsPed)
