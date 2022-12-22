@@ -29,7 +29,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
 
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="PlayerCompanion" Version="1.2.1">
       <IncludeAssets>compile</IncludeAssets>
     </PackageReference>
