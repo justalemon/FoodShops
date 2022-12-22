@@ -114,7 +114,7 @@ namespace FoodShops
             
             Companion.Wallet.Money -= meal.Price;
             float health = Game.Player.Character.HealthFloat + meal.Health;
-            float maxHealth = Game.Player.Character.MaxHealthFloat;
+            float maxHealth = Game.Player.Character.MaxHealthFloat == 0 ? Game.Player.Character.MaxHealth : Game.Player.Character.MaxHealthFloat;
             if (health > maxHealth)
             {
                 health = maxHealth;
