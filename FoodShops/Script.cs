@@ -169,17 +169,32 @@ namespace FoodShops
                     continue;
                 }
 
-                if (shop.Interior.HasValue && shop.Ped.IsPositionFrozen)
+                bool isAreaLoaded = Function.Call<bool>(Hash.HAS_COLLISION_LOADED_AROUND_ENTITY, shop.Ped);
+
+                if (shop.Interior.HasValue)
                 {
                     int id = Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, shop.Interior.Value.X, shop.Interior.Value.Y, shop.Interior.Value.Z);
-                    bool ready = Function.Call<bool>(Hash.IS_INTERIOR_READY, id);
+                    isAreaLoaded = isAreaLoaded && Function.Call<bool>(Hash.IS_INTERIOR_READY, id);
+                }
 
-                    if (Function.Call<bool>(Hash.HAS_COLLISION_LOADED_AROUND_ENTITY, shop.Ped) && ready)
+                if (shop.Ped.IsPositionFrozen)
+                {
+                    if (isAreaLoaded)
                     {
                         shop.Ped.IsPositionFrozen = false;
                     }
                     else
                     {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (!isAreaLoaded)
+                    {
+                        shop.Ped.IsPositionFrozen = true;
+                        shop.Ped.Position = shop.PedInfo.Position;
+                        shop.Ped.Heading = shop.PedInfo.Heading;
                         continue;
                     }
                 }
