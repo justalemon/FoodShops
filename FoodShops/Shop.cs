@@ -1,4 +1,5 @@
-﻿using FoodShops.Converters;
+﻿using System;
+using FoodShops.Converters;
 using GTA;
 using GTA.Math;
 using GTA.Native;
@@ -6,6 +7,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using GTA.UI;
 using LemonUI.Elements;
 
 namespace FoodShops
@@ -110,54 +112,66 @@ namespace FoodShops
         /// <param name="path">The file to load.</param>
         /// <param name="converters">The converters to use.</param>
         /// <returns>The location loaded</returns>
-        /// <exception cref="InteriorNotFoundException">The interior required does not exists.</exception>
-        /// <exception cref="InvalidPedException">The shop keeper is not a valid ped.</exception>
         public static Shop Load(string path, params JsonConverter[] converters)
         {
             string contents = File.ReadAllText(path);
-            Shop shop = JsonConvert.DeserializeObject<Shop>(contents, converters);
 
-            if (shop.Interior.HasValue)
+            try
             {
-                int interior = Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, shop.Interior.Value.X, shop.Interior.Value.Y, shop.Interior.Value.Z);
-                
-                if (interior == 0)
+                Shop shop = JsonConvert.DeserializeObject<Shop>(contents, converters);
+
+                if (shop.Interior.HasValue)
                 {
-                    throw new InteriorNotFoundException(shop);
+                    int interior = Function.Call<int>(Hash.GET_INTERIOR_AT_COORDS, shop.Interior.Value.X,
+                        shop.Interior.Value.Y, shop.Interior.Value.Z);
+
+                    if (interior == 0)
+                    {
+                        Notification.Show(
+                            $"~o~Warning~s~: Interior of {shop.Name} is not available! Maybe you forgot to install it?");
+                        return null;
+                    }
+
+                    Function.Call(Hash.PIN_INTERIOR_IN_MEMORY, interior);
+                    Function.Call(Hash.DISABLE_INTERIOR, interior, false);
+                    Function.Call(Hash.CAP_INTERIOR, interior, false);
+                    Function.Call(Hash.SET_INTERIOR_ACTIVE, interior, true);
                 }
 
-                Function.Call(Hash.PIN_INTERIOR_IN_MEMORY, interior);
-                Function.Call(Hash.DISABLE_INTERIOR, interior, false);
-                Function.Call(Hash.CAP_INTERIOR, interior, false);
-                Function.Call(Hash.SET_INTERIOR_ACTIVE, interior, true);
-            }
+                if (!shop.PedInfo.Model.IsPed)
+                {
+                    Notification.Show($"~o~Warning~s~: Model {shop.PedInfo.Model} for Shop {shop.Name} is not a Ped!");
+                    return null;
+                }
 
-            if (!shop.PedInfo.Model.IsPed)
+                ScaledTexture texture = null;
+                if (!string.IsNullOrWhiteSpace(shop.BannerTXD) && !string.IsNullOrWhiteSpace(shop.BannerTexture))
+                {
+                    texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), shop.BannerTXD, shop.BannerTexture);
+                }
+
+                Menu menu = new Menu(shop, texture);
+                FoodShops.Pool.Add(menu);
+                shop.Menu = menu;
+
+                shop.RecreatePed();
+
+                if (FoodShops.Config.ShowBlips)
+                {
+                    shop.Blip = World.CreateBlip(shop.Trigger);
+                    shop.Blip.Sprite = BlipSprite.Store;
+                    shop.Blip.Color = BlipColor.NetPlayer3;
+                    shop.Blip.Name = $"Food Shop: {shop.Name}";
+                    shop.Blip.IsShortRange = true;
+                }
+
+                return shop;
+            }
+            catch (Exception ex)
             {
-                throw new InvalidPedException(shop);
+                Notification.Show($"~o~Warning~s~: Unable to load Shop {Path.GetFileName(path)}:\n{ex.Message}");
+                return null;
             }
-
-            ScaledTexture texture = null;
-            if (!string.IsNullOrWhiteSpace(shop.BannerTXD) && !string.IsNullOrWhiteSpace(shop.BannerTexture))
-            {
-                texture = new ScaledTexture(PointF.Empty, new SizeF(0, 108), shop.BannerTXD, shop.BannerTexture);
-            }
-            Menu menu = new Menu(shop, texture);
-            FoodShops.Pool.Add(menu);
-            shop.Menu = menu;
-
-            shop.RecreatePed();
-
-            if (FoodShops.Config.ShowBlips)
-            {
-                shop.Blip = World.CreateBlip(shop.Trigger);
-                shop.Blip.Sprite = BlipSprite.Store;
-                shop.Blip.Color = BlipColor.NetPlayer3;
-                shop.Blip.Name = $"Food Shop: {shop.Name}";
-                shop.Blip.IsShortRange = true;
-            }
-
-            return shop;
         }
         
         #endregion

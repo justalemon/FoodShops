@@ -112,22 +112,10 @@ namespace FoodShops
                     return;
                 }
 
-                try
+                Shop shop = Shop.Load(path, converter);
+                if (shop != null)
                 {
-                    Shop shop = Shop.Load(path, converter);
                     shops.Add(shop);
-                }
-                catch (InteriorNotFoundException ex)
-                {
-                    Notification.Show($"~o~Warning~s~: Interior of {ex.Shop.Name} is not available! Maybe you forgot to install it?");
-                }
-                catch (InvalidPedException ex)
-                {
-                    Notification.Show($"~o~Warning~s~: Model {ex.Shop.PedInfo.Model} for Shop {ex.Shop.Name} is not a Ped!");
-                }
-                catch (Exception ex)
-                {
-                    Notification.Show($"~o~Warning~s~: Unable to load Shop {Path.GetFileName(path)}:\n{ex.Message}");
                 }
             }
         }
