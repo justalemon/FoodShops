@@ -47,6 +47,11 @@ namespace FoodShops
         [JsonConverter(typeof(Vector3Converter))]
         public Vector3? Interior { get; set; }
         /// <summary>
+        /// The DLCs that are required for this location to load.
+        /// </summary>
+        [JsonProperty("dlcs_required", Required = Required.Default)]
+        public List<string> DlcsRequired { get; set; } = new List<string>();
+        /// <summary>
         /// The information of the shop ped.
         /// </summary>
         [JsonProperty("ped", Required = Required.Always)]
@@ -119,6 +124,15 @@ namespace FoodShops
             try
             {
                 Shop shop = JsonConvert.DeserializeObject<Shop>(contents, converters);
+
+                foreach (string dlc in shop.DlcsRequired)
+                {
+                    if (!Function.Call<bool>(Hash.IS_DLC_PRESENT, Game.GenerateHash(dlc)))
+                    {
+                        Notification.Show($"~o~Warning~s~: DLC {dlc} for location {shop.Name} is not installed! Maybe you forgot to install it?");
+                        return null;
+                    }
+                }
 
                 if (shop.Interior.HasValue)
                 {
