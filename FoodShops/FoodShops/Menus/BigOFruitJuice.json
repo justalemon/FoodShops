@@ -1,0 +1,30 @@
+﻿{
+    "id": "1a486efa-4e71-45fb-a867-144be8b6aa96",
+    "meals": [
+        {
+            "name": "Fresh OJ",
+            "price": 4,
+            "health": 25
+        },
+        {
+            "name": "Fresh Apple",
+            "price": 5,
+            "health": 25
+        },
+        {
+            "name": "Just Peachy",
+            "price": 6,
+            "health": 50
+        },
+        {
+            "name": "Mix Berry",
+            "price": 7,
+            "health": 50
+        },
+        {
+            "name": "OJ and Lime",
+            "price": 8,
+            "health": 100
+        }
+    ]
+}

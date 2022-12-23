@@ -1,0 +1,31 @@
+﻿{
+    "name": "Big O Fruit Juice",
+    "banner_txd": "foodshops",
+    "banner_texture": "big_o",
+    "trigger": {
+        "x": 2741.65,
+        "y": 4412.86,
+        "z": 47.62
+    },
+    "interior": null,
+    "ped": {
+        "pos": {
+            "x": 2740.91,
+            "y": 4414.66,
+            "z": 48.64
+        },
+        "heading": 194.23,
+        "model": "s_f_m_sweatshop_01"
+    },
+    "camera": {
+        "pos": {
+            "x": 2741.60,
+            "y": 4413.00,
+            "z": 49.27
+        },
+        "fov": 40
+    },
+    "menus": [
+        "1a486efa-4e71-45fb-a867-144be8b6aa96"
+    ]
+}
