@@ -122,7 +122,7 @@ namespace FoodShops
             Game.Player.Character.HealthFloat = health;
             MealsEaten += 1;
 
-            if (MealsEaten > FoodShops.Config.MaxMeals)
+            if (FoodShops.Config.MaxMeals > 1 && MealsEaten > FoodShops.Config.MaxMeals)
             {
                 switch (FoodShops.Config.OverEatingBehavior)
                 {
