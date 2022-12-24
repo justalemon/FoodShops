@@ -21,10 +21,15 @@ namespace FoodShops
     {
         #region Fields
 
+        private static readonly TimeSpan hoursSix = TimeSpan.FromHours(6);
+        private static readonly TimeSpan hoursTwelve = TimeSpan.FromHours(6);
+        private static readonly TimeSpan hoursTwentyFour = TimeSpan.FromHours(24);
+
         private static readonly string dataDirectory = Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath, "FoodShops");
         private static readonly List<Shop> shops = new List<Shop>();
         private static readonly Dictionary<Guid, ShopMenu> menus = new Dictionary<Guid, ShopMenu>();
-        
+        private static DateTime drunkUntil;
+
         #endregion
         
         #region Properties
@@ -41,6 +46,27 @@ namespace FoodShops
         /// The currently active shop.
         /// </summary>
         public static Shop Active { get; private set; }
+        /// <summary>
+        /// If the player just became drunk.
+        /// </summary>
+        public static bool JustBecameDrunk { get; internal set; }
+
+        /// <summary>
+        /// Until when the player will be drunk, in in-game time.
+        /// </summary>
+        public static DateTime DrunkUntil
+        {
+            get => drunkUntil;
+            internal set
+            {
+                if (drunkUntil == default)
+                {
+                    JustBecameDrunk = true;
+                }
+                
+                drunkUntil = value;
+            }
+        }
 
         #endregion
 
@@ -119,6 +145,19 @@ namespace FoodShops
                 }
             }
         }
+        private static void ClearDrunkenness()
+        {
+            Function.Call(Hash._SET_FACIAL_CLIPSET_OVERRIDE, Game.Player.Character, "mood_happy_1");
+            Function.Call(Hash.CLEAR_FACIAL_IDLE_ANIM_OVERRIDE, Game.Player.Character);
+            Function.Call((Hash)0x487A82C650EB7799, 0f);  // SET_GAMEPLAY_CAM_MOTION_BLUR_SCALING_THIS_UPDATE
+            Function.Call((Hash)0x0225778816FDC28C, 0f);  // SET_GAMEPLAY_CAM_MAX_MOTION_BLUR_STRENGTH_THIS_UPDATE
+            Function.Call(Hash.SET_GAMEPLAY_CAM_SHAKE_AMPLITUDE, 0f);
+            Function.Call(Hash.STOP_SCRIPT_GLOBAL_SHAKING, false);
+            Function.Call(Hash.SET_PED_IS_DRUNK, Game.Player.Character, false);
+            Function.Call(Hash.RESET_PED_MOVEMENT_CLIPSET, Game.Player.Character, 1f);
+            Function.Call((Hash)0x1CBA05AE7BD7EE05, 15f);  // SET_TRANSITION_OUT_OF_TIMECYCLE_MODIFIER
+            DrunkUntil = default;
+        }
 
         #endregion
 
@@ -134,6 +173,57 @@ namespace FoodShops
         private void FoodShops_Tick(object sender, EventArgs e)
         {
             Pool.Process();
+
+            if (DrunkUntil != default)
+            {
+                if (JustBecameDrunk)
+                {
+                    Function.Call(Hash._SET_FACIAL_CLIPSET_OVERRIDE, Game.Player.Character, "mood_drunk_1");
+                    Function.Call(Hash.SET_FACIAL_IDLE_ANIM_OVERRIDE, Game.Player.Character, "mood_drunk_1", "facials@gen_male@base");
+                    Function.Call((Hash)0x487A82C650EB7799, 1f);  // SET_GAMEPLAY_CAM_MOTION_BLUR_SCALING_THIS_UPDATE
+                    Function.Call((Hash)0x0225778816FDC28C, 1f);  // SET_GAMEPLAY_CAM_MAX_MOTION_BLUR_STRENGTH_THIS_UPDATE
+                    Function.Call(Hash.SHAKE_GAMEPLAY_CAM, "DRUNK_SHAKE", 1f);
+                    Function.Call(Hash.SET_PED_IS_DRUNK, Game.Player.Character, true);
+                    if (!Function.Call<bool>(Hash.HAS_ANIM_SET_LOADED, "move_m@drunk@verydrunk"))
+                    {
+                        Function.Call(Hash.REQUEST_ANIM_SET, "move_m@drunk@verydrunk");
+                        Yield();
+                    }
+                    Function.Call(Hash.SET_PED_MOVEMENT_CLIPSET, Game.Player.Character, "move_m@drunk@verydrunk", 0x3E800000);
+                    Function.Call(Hash.SET_TRANSITION_TIMECYCLE_MODIFIER, "Drunk", 15f);
+
+                    JustBecameDrunk = false;
+                }
+
+                TimeSpan difference = DrunkUntil - World.CurrentDate;
+
+                if (difference > hoursTwentyFour)
+                {
+                    Active.Menu.Visible = false;
+                    Game.Player.Character.Health = 0;
+                    ClearDrunkenness();
+                    return;
+                }
+
+                if (DrunkUntil < World.CurrentDate)
+                {
+                    ClearDrunkenness();
+                }
+
+                if (difference < hoursSix)
+                {
+                    Function.Call(Hash.SET_AUDIO_SPECIAL_EFFECT_MODE, 5);  // kSpecialEffectModeDrunkStage01
+                    Function.Call(Hash.RESET_PED_MOVEMENT_CLIPSET, Game.Player.Character, 1f);
+                }
+                else if (difference < hoursTwelve)
+                {
+                    Function.Call(Hash.SET_AUDIO_SPECIAL_EFFECT_MODE, 6);  // kSpecialEffectModeDrunkStage02
+                }
+                else
+                {
+                    Function.Call(Hash.SET_AUDIO_SPECIAL_EFFECT_MODE, 7);  // kSpecialEffectModeDrunkStage03
+                }
+            }
 
             if (Active != null)
             {
@@ -225,6 +315,8 @@ namespace FoodShops
                 shop.Blip?.Delete();
                 shop.Camera?.Delete();
             }
+            
+            ClearDrunkenness();
         }
 
         #endregion

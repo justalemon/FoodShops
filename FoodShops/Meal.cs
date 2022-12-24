@@ -29,5 +29,10 @@ namespace FoodShops
         /// </summary>
         [JsonProperty("health", Required = Required.Always)]
         public float Health { get; set; }
+        /// <summary>
+        /// The time in minutes that the alcohol of this meal will stay in the .
+        /// </summary>
+        [JsonProperty("drunkenness", Required = Required.Default)]
+        public int Drunkenness { get; set; }
     }
 }

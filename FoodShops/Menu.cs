@@ -122,6 +122,18 @@ namespace FoodShops
             Game.Player.Character.HealthFloat = health;
             MealsEaten += 1;
 
+            if (meal.Drunkenness > 0)
+            {
+                if (FoodShops.DrunkUntil == default)
+                {
+                    FoodShops.DrunkUntil = World.CurrentDate + TimeSpan.FromMinutes(meal.Drunkenness);
+                }
+                else
+                {
+                    FoodShops.DrunkUntil += TimeSpan.FromMinutes(meal.Drunkenness);
+                }
+            }
+
             if (FoodShops.Config.MaxMeals > 1 && MealsEaten > FoodShops.Config.MaxMeals)
             {
                 switch (FoodShops.Config.OverEatingBehavior)
