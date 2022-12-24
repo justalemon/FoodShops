@@ -1,4 +1,4 @@
-# FoodShops<br>[![AppVeyor][appveyor-img]][appveyor-url] [![Patreon][patreon-img]][patreon-url] [![PayPal][paypal-img]][paypal-url] [![Discord][discord-img]][discord-url]
+# FoodShops<br>[![GitHub Actions][actions-img]][actions-url] [![Patreon][patreon-img]][patreon-url] [![PayPal][paypal-img]][paypal-url] [![Discord][discord-img]][discord-url]
 
 FoodShops is a simple mod for Grand Theft Auto V that implements the food shops from Grand Theft Auto San Andreas while taking some information from Vice City and IV.
 
@@ -26,8 +26,8 @@ Please note that you will puke if you eat too much.
 
 For adding new food shops around the map, please check [the wiki](https://github.com/justalemon/FoodShops/wiki).
 
-[appveyor-img]: https://img.shields.io/appveyor/build/justalemon/foodshops?label=appveyor
-[appveyor-url]: https://ci.appveyor.com/project/justalemon/foodshops
+[actions-img]: https://img.shields.io/github/actions/workflow/status/justalemon/FoodShops/main.yml?branch=master&label=actions
+[actions-url]: https://github.com/LemonUIbyLemon/LemonUI/actions
 [patreon-img]: https://img.shields.io/badge/support-patreon-FF424D.svg
 [patreon-url]: https://www.patreon.com/lemonchan
 [paypal-img]: https://img.shields.io/badge/support-paypal-0079C1.svg
