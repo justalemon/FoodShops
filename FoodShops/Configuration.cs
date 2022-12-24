@@ -34,7 +34,7 @@ namespace FoodShops
         /// What the mod should do when the player eats more food than allowed.
         /// </summary>
         [JsonProperty("over_eating_behavior")]
-        public OverEatingBehavior OverEatingBehavior { get; set; } = OverEatingBehavior.Death;
+        public OverEatingBehavior OverEatingBehavior { get; set; } = OverEatingBehavior.Animation;
         
         #endregion
         
