@@ -238,7 +238,7 @@ namespace FoodShops
 
             foreach (Shop shop in shops)
             {
-                if (pos.DistanceTo(shop.Trigger) > 50)
+                if (pos.DistanceTo(shop.Trigger) > 50 && pos.DistanceTo(shop.Ped.Position) > 50)
                 {
                     if (shop.Ped.IsFleeing || shop.Ped.IsDead)
                     {
