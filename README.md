@@ -8,7 +8,7 @@ It allows you to visit food shop and purchase food that increases your health by
 
 * [GitHub](https://github.com/justalemon/FoodShops/releases)
 * [5mods](https://www.gta5-mods.com/scripts/foodshops)
-* [AppVeyor](https://ci.appveyor.com/project/justalemon/foodshops) (experimental)
+* [GitHub Actions](https://github.com/justalemon/FoodShops/actions) (experimental versions)
 
 ## Installation
 
