@@ -1,0 +1,35 @@
+﻿{
+    "id": "e7e3d9d5-9222-4cd0-a87b-c483e4c3f13b",
+    "meals": [
+        {
+            "name": "Pisswasser",
+            "price": 5,
+            "health": 0,
+            "drunkenness": 15
+        },
+        {
+            "name": "Vodka Shot",
+            "price": 10,
+            "health": 0,
+            "drunkenness": 30
+        },
+        {
+            "name": "The Mount Whiskey Shot",
+            "price": 55,
+            "health": 0,
+            "drunkenness": 720
+        },
+        {
+            "name": "Richard's Whiskey Shot",
+            "price": 190,
+            "health": 0,
+            "drunkenness": 1080
+        },
+        {
+            "name": "Macbeth Whisky Shot",
+            "price": 350,
+            "health": 0,
+            "drunkenness": 1440
+        }
+    ]
+}
