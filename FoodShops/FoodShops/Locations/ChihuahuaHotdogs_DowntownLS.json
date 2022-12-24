@@ -12,6 +12,9 @@
         "y": -1002.46,
         "z": 29.29
     },
+    "dlcs_required": [
+        "int_hotdogs"
+    ],
     "ped": {
         "pos": {
             "x": 44.26,

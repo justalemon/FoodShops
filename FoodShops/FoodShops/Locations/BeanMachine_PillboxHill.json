@@ -12,6 +12,9 @@
         "y": -970.12,
         "z": 29.42
     },
+    "dlcs_required": [
+        "rflx_beanmachine"
+    ],
     "ped": {
         "pos": {
             "x": 280.53,

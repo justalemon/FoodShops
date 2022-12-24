@@ -12,6 +12,9 @@
         "y": -1601.59,
         "z": 29.37
     },
+    "dlcs_required": [
+        "template1"
+    ],
     "ped": {
         "pos": {
             "x": 10.17,
