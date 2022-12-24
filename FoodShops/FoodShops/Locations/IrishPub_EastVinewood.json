@@ -1,0 +1,38 @@
+﻿{
+    "name": "Irish Bar",
+    "banner_txd": "",
+    "banner_texture": "",
+    "trigger": {
+        "x": 837.26,
+        "y": -113.54,
+        "z": 78.77
+    },
+    "interior": {
+        "x": 837.26,
+        "y": -113.54,
+        "z": 79.77
+    },
+    "dlcs_required": [
+        "irishpub"
+    ],
+    "ped": {
+        "pos": {
+            "x": 836.18,
+            "y": -115.03,
+            "z": 78.77
+        },
+        "heading": 332.60,
+        "model": "s_f_y_clubbar_01"
+    },
+    "camera": {
+        "pos": {
+            "x": 837.22,
+            "y": -113.57,
+            "z": 80.42
+        },
+        "fov": 40
+    },
+    "menus": [
+        "e7e3d9d5-9222-4cd0-a87b-c483e4c3f13b"
+    ]
+}
