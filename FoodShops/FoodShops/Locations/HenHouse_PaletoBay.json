@@ -1,0 +1,38 @@
+﻿{
+    "name": "The Hen House",
+    "banner_txd": "",
+    "banner_texture": "",
+    "trigger": {
+        "x": -295.40,
+        "y": 6264.40,
+        "z": 30.51
+    },
+    "interior": {
+        "x": -294.21,
+        "y": 6265.58,
+        "z": 30.51
+    },
+    "dlcs_required": [
+        "henhouse"
+    ],
+    "ped": {
+        "pos": {
+            "x": -294.21,
+            "y": 6265.58,
+            "z": 30.51
+        },
+        "heading": 134.90,
+        "model": "s_f_y_clubbar_01"
+    },
+    "camera": {
+        "pos": {
+            "x": -295.35,
+            "y": 6264.42,
+            "z": 32.15
+        },
+        "fov": 40
+    },
+    "menus": [
+        "e7e3d9d5-9222-4cd0-a87b-c483e4c3f13b"
+    ]
+}

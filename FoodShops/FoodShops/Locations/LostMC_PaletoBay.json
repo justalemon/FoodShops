@@ -1,0 +1,38 @@
+﻿{
+    "name": "The Lost MC Bar",
+    "banner_txd": "",
+    "banner_texture": "",
+    "trigger": {
+        "x": -21.83,
+        "y": 6479.89,
+        "z": 30.49
+    },
+    "interior": {
+        "x": -20.97,
+        "y": 6480.67,
+        "z": 31.49
+    },
+    "dlcs_required": [
+        "cclosp"
+    ],
+    "ped": {
+        "pos": {
+            "x": -20.97,
+            "y": 6480.67,
+            "z": 31.49
+        },
+        "heading": 131.83,
+        "model": "g_f_y_lost_01"
+    },
+    "camera": {
+        "pos": {
+            "x": -21.85,
+            "y": 6479.85,
+            "z": 32.13
+        },
+        "fov": 40
+    },
+    "menus": [
+        "e7e3d9d5-9222-4cd0-a87b-c483e4c3f13b"
+    ]
+}

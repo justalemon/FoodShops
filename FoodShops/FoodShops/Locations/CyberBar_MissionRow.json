@@ -1,0 +1,38 @@
+﻿{
+    "name": "Cyber Bar",
+    "banner_txd": "",
+    "banner_texture": "",
+    "trigger": {
+        "x": 335.95,
+        "y": -916.72,
+        "z": 28.25
+    },
+    "interior": {
+        "x": 335.95,
+        "y": -916.72,
+        "z": 29.25
+    },
+    "dlcs_required": [
+        "cyber_solo2_desert"
+    ],
+    "ped": {
+        "pos": {
+            "x": 335.86,
+            "y": -915.22,
+            "z": 29.00
+        },
+        "heading": 174.90,
+        "model": "s_f_y_clubbar_01"
+    },
+    "camera": {
+        "pos": {
+            "x": 335.96,
+            "y": -916.66,
+            "z": 29.90
+        },
+        "fov": 40
+    },
+    "menus": [
+        "e7e3d9d5-9222-4cd0-a87b-c483e4c3f13b"
+    ]
+}
