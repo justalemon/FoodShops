@@ -29,7 +29,7 @@ namespace FoodShops
         /// The maximum amount of meals before the user vomits.
         /// </summary>
         [JsonProperty("max_meals")]
-        public int MaxMeals { get; set; } = 5;
+        public int MaxMeals { get; set; } = -1;
         /// <summary>
         /// What the mod should do when the player eats more food than allowed.
         /// </summary>
